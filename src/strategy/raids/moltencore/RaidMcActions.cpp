@@ -35,6 +35,9 @@ bool McMoveFromBaronGeddonAction::Execute(Event event)
         long distToTravel = radius - bot->GetDistance(boss);
         if (distToTravel > 0)
         {
+             // Stop current spell first
+            botAI->InterruptSpell();
+
             // float angle = bot->GetAngle(boss) + M_PI;
             // return Move(angle, distToTravel);
             return MoveAway(boss, distToTravel);
