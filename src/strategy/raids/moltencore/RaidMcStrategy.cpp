@@ -5,6 +5,9 @@
 void RaidMcStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
     triggers.push_back(
+        new TriggerNode("mc baron geddon fire resistance trigger",
+                        NextAction::array(0, new NextAction("mc baron geddon fire resistance action", ACTION_RAID), nullptr)));
+    triggers.push_back(
         new TriggerNode("mc living bomb debuff",
                         NextAction::array(0, new NextAction("mc check should move from group", ACTION_RAID), nullptr)));
     triggers.push_back(
