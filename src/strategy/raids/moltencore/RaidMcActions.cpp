@@ -3,6 +3,63 @@
 #include "Playerbots.h"
 #include "RaidMcTriggers.h"
 
+bool McAttackHighestHealthCoreHoundAction::Execute(Event event)
+{
+    if (!AI_VALUE2(Unit*, "find target", "core hound"))
+        return false;
+
+    // This action is only for melee
+    if (!PlayerbotAI::IsMelee(bot))
+        return false;
+
+    Unit* priorityTarget = FindPriorityTarget();
+
+    // Update raid target icons if needed
+    return UpdateSkullMarker(priorityTarget);
+}
+
+Unit* McAttackHighestHealthCoreHoundAction::FindPriorityTarget() const
+{
+    Unit* priorityTarget = nullptr;
+
+    // Check for alive core hounds
+    for (const ObjectGuid& targetGuid : AI_VALUE(GuidVector, "possible targets no los"))
+    {
+        Unit* unit = botAI->GetUnit(targetGuid);
+        if (unit && unit->IsAlive() && unit->IsInCombat() && unit->GetEntry() == NPC_CORE_HOUND && !unit->HasAura(SPELL_CORE_HOUND_PLAY_DEAD))
+        {
+            if (priorityTarget == nullptr || priorityTarget->GetHealth() < unit->GetHealth())
+                priorityTarget = unit;
+        }
+    }
+
+    return priorityTarget;
+}
+
+bool McAttackHighestHealthCoreHoundAction::UpdateSkullMarker(const Unit* priorityTarget) const
+{
+    if (!priorityTarget)
+        return false;
+
+    Group* group = bot->GetGroup();
+    if (!group)
+        return false;
+
+    constexpr uint8_t skullIconId = 7;
+
+    // Get current skull target
+    ObjectGuid currentSkull = group->GetTargetIcon(skullIconId);
+    Unit* currentSkullUnit = botAI->GetUnit(currentSkull);
+
+    // Determine if skull marker needs updating
+    bool needsUpdate = !currentSkullUnit || !currentSkullUnit->IsAlive() || currentSkullUnit != priorityTarget;
+
+    // Update if needed
+    if (needsUpdate)
+        group->SetTargetIcon(skullIconId, bot->GetGUID(), priorityTarget->GetGUID());
+    return needsUpdate;
+}
+
 bool McCheckShouldMoveFromGroupAction::Execute(Event event)
 {
     if (bot->HasAura(SPELL_BARON_GEDDON_LIVING_BOMB)) // baron geddon's living bomb
@@ -35,7 +92,7 @@ bool McMoveFromBaronGeddonAction::Execute(Event event)
         long distToTravel = radius - bot->GetDistance(boss);
         if (distToTravel > 0)
         {
-             // Stop current spell first
+            // Stop current spell first
             botAI->InterruptSpell();
 
             // float angle = bot->GetAngle(boss) + M_PI;

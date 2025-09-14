@@ -10,6 +10,7 @@ class RaidMcTriggerContext : public NamedObjectContext<Trigger>
 public:
     RaidMcTriggerContext()
     {
+        creators["mc core hounds trigger"] = &RaidMcTriggerContext::core_hounds_trigger;
         creators["mc lucifron shadow resistance trigger"] = &RaidMcTriggerContext::lucifron_shadow_resistance_trigger;
         creators["mc magmadar fire resistance trigger"] = &RaidMcTriggerContext::magmadar_fire_resistance_trigger;
         creators["mc baron geddon fire resistance trigger"] = &RaidMcTriggerContext::baron_geddon_fire_resistance_trigger;
@@ -18,6 +19,7 @@ public:
     }
 
 private:
+    static Trigger* core_hounds_trigger(PlayerbotAI* ai) { return new McCoreHoundsTrigger(ai); }
     static Trigger* lucifron_shadow_resistance_trigger(PlayerbotAI* ai) { return new BossShadowResistanceTrigger(ai, "lucifron"); }
     static Trigger* magmadar_fire_resistance_trigger(PlayerbotAI* ai) { return new BossFireResistanceTrigger(ai, "magmadar"); }
     static Trigger* baron_geddon_fire_resistance_trigger(PlayerbotAI* ai) { return new BossFireResistanceTrigger(ai, "baron geddon"); }

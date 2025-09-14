@@ -5,11 +5,27 @@
 #include "Playerbots.h"
 #include "Trigger.h"
 
+enum CreatureIdsMC
+{
+    // Core Hound
+    NPC_CORE_HOUND = 11671
+};
+
 enum SpellIdsMC
 {
+    // Core Hound
+    SPELL_CORE_HOUND_PLAY_DEAD = 19822,
+
     // Baron Geddon
     SPELL_BARON_GEDDON_INFERNO = 19695,
     SPELL_BARON_GEDDON_LIVING_BOMB = 20475,
+};
+
+class McCoreHoundsTrigger : public Trigger
+{
+public:
+    McCoreHoundsTrigger(PlayerbotAI* botAI) : Trigger(botAI, "mc core hounds trigger", 1000) { }
+    bool IsActive() override;
 };
 
 class McLivingBombDebuffTrigger : public Trigger
