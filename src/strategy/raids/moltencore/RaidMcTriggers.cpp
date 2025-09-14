@@ -2,6 +2,11 @@
 
 #include "SharedDefines.h"
 
+bool McCoreHoundsTrigger::IsActive()
+{
+    return AI_VALUE2(Unit*, "find target", "core hound");
+}
+
 bool McLivingBombDebuffTrigger::IsActive()
 {
     // if bot has baron geddon's living bomb, we need to add strat, otherwise we need to remove

@@ -4,6 +4,11 @@
 
 void RaidMcStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
+    // Core Hounds
+    triggers.push_back(
+        new TriggerNode("mc core hounds trigger",
+                        NextAction::array(0, new NextAction("mc attack highest health core hound", ACTION_RAID), nullptr)));
+
     // Lucifron
     triggers.push_back(
         new TriggerNode("mc lucifron shadow resistance trigger",
