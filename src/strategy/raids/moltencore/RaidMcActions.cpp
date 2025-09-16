@@ -12,13 +12,13 @@ bool McAttackHighestHealthCoreHoundAction::Execute(Event event)
     if (!PlayerbotAI::IsMelee(bot))
         return false;
 
-    Unit* priorityTarget = FindPriorityTarget();
+    Unit* priorityTarget = FindHighestHealthCoreHound();
 
     // Update raid target icons if needed
     return UpdateSkullMarker(priorityTarget);
 }
 
-Unit* McAttackHighestHealthCoreHoundAction::FindPriorityTarget() const
+Unit* McAttackHighestHealthCoreHoundAction::FindHighestHealthCoreHound() const
 {
     Unit* priorityTarget = nullptr;
 
