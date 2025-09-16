@@ -13,8 +13,8 @@ public:
     McAttackHighestHealthCoreHoundAction(PlayerbotAI* botAI, const std::string& name = "mc attack highest health core hound")
         : AttackAction(botAI, name) {}
     bool Execute(Event event) override;
-
-    Unit* FindPriorityTarget() const;
+private:
+    Unit* FindHighestHealthCoreHound() const;
     bool UpdateSkullMarker(const Unit* priorityTarget) const;
 };
 
