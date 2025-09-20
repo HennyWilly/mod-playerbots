@@ -5,6 +5,7 @@
 void RaidMcStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
     // Core Hounds
+    // TODO Ignore core hounds with play dead
     triggers.push_back(
         new TriggerNode("mc core hounds trigger",
                         NextAction::array(0, new NextAction("mc attack highest health core hound", ACTION_RAID), nullptr)));
@@ -19,6 +20,12 @@ void RaidMcStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     triggers.push_back(
         new TriggerNode("mc magmadar fire resistance trigger",
                         NextAction::array(0, new NextAction("mc magmadar fire resistance action", ACTION_RAID), nullptr)));
+
+    // Garr
+    // TODO Mark Firesworn with moon => warlock banish
+    triggers.push_back(
+        new TriggerNode("mc garr fire resistance trigger",
+                        NextAction::array(0, new NextAction("mc garr fire resistance action", ACTION_RAID), nullptr)));
 
     // Baron Geddon
     triggers.push_back(

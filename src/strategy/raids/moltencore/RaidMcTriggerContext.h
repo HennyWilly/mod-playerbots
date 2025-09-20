@@ -13,6 +13,7 @@ public:
         creators["mc core hounds trigger"] = &RaidMcTriggerContext::core_hounds_trigger;
         creators["mc lucifron shadow resistance trigger"] = &RaidMcTriggerContext::lucifron_shadow_resistance_trigger;
         creators["mc magmadar fire resistance trigger"] = &RaidMcTriggerContext::magmadar_fire_resistance_trigger;
+        creators["mc garr fire resistance trigger"] = &RaidMcTriggerContext::garr_fire_resistance_trigger;
         creators["mc baron geddon fire resistance trigger"] = &RaidMcTriggerContext::baron_geddon_fire_resistance_trigger;
         creators["mc living bomb debuff"] = &RaidMcTriggerContext::living_bomb_debuff;
         creators["mc baron geddon inferno"] = &RaidMcTriggerContext::baron_geddon_inferno;
@@ -22,6 +23,7 @@ private:
     static Trigger* core_hounds_trigger(PlayerbotAI* ai) { return new McCoreHoundsTrigger(ai); }
     static Trigger* lucifron_shadow_resistance_trigger(PlayerbotAI* ai) { return new BossShadowResistanceTrigger(ai, "lucifron"); }
     static Trigger* magmadar_fire_resistance_trigger(PlayerbotAI* ai) { return new BossFireResistanceTrigger(ai, "magmadar"); }
+    static Trigger* garr_fire_resistance_trigger(PlayerbotAI* ai) { return new BossFireResistanceTrigger(ai, "garr"); }
     static Trigger* baron_geddon_fire_resistance_trigger(PlayerbotAI* ai) { return new BossFireResistanceTrigger(ai, "baron geddon"); }
     static Trigger* living_bomb_debuff(PlayerbotAI* ai) { return new McLivingBombDebuffTrigger(ai); }
     static Trigger* baron_geddon_inferno(PlayerbotAI* ai) { return new McBaronGeddonInfernoTrigger(ai); }
