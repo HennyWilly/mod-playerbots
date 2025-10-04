@@ -1,6 +1,7 @@
 #include "RaidZGStrategy.h"
 
 #include "Strategy.h"
+#include "RaidZGMultipliers.h"
 
 void RaidZGStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -20,4 +21,26 @@ void RaidZGStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     triggers.push_back(new TriggerNode(
         "zg jeklik phase one",
         NextAction::array(0, new NextAction("zg jeklik phase one position", ACTION_RAID + 1), nullptr)));
+
+    // Mar'li
+    triggers.push_back(new TriggerNode(
+        "zg mar'li troll form",
+        NextAction::array(0, new NextAction("zg mar'li troll form attack adds", ACTION_RAID + 1), nullptr)));
+    triggers.push_back(new TriggerNode(
+        "zg mar'li troll form",
+        NextAction::array(0, new NextAction("zg mar'li troll form position", ACTION_RAID + 2), nullptr)));
+    triggers.push_back(new TriggerNode(
+       "zg mar'li spider form",
+       NextAction::array(0, new NextAction("zg mar'li spider form set main tank", ACTION_RAID + 3), nullptr)));
+    triggers.push_back(new TriggerNode(
+       "zg mar'li spider form",
+       NextAction::array(0, new NextAction("zg mar'li spider form tank attack", ACTION_RAID + 2), nullptr)));
+    triggers.push_back(new TriggerNode(
+       "zg mar'li spider form",
+       NextAction::array(0, new NextAction("zg mar'li spider form position", ACTION_RAID + 1), nullptr)));
+}
+
+void RaidZGStrategy::InitMultipliers(std::vector<Multiplier*> &multipliers)
+{
+    multipliers.push_back(new MarliMultiplier(botAI));
 }

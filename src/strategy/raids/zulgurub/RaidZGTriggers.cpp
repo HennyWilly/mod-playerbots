@@ -15,3 +15,17 @@ bool ZgJeklikPhaseOneTrigger::IsActive()
         return boss->GetHealthPct() > 50;
     return false;
 }
+
+bool ZgMarliTrollFormTrigger::IsActive()
+{
+    if (const Unit* boss = AI_VALUE2(Unit*, "find target", "high priestess mar'li"))
+        return !boss->HasAura(SPELL_SPIDER_FORM);
+    return false;
+}
+
+bool ZgMarliSpiderFormTrigger::IsActive()
+{
+    if (const Unit* boss = AI_VALUE2(Unit*, "find target", "high priestess mar'li"))
+        return boss->HasAura(SPELL_SPIDER_FORM);
+    return false;
+}
