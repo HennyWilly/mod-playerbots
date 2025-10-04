@@ -2,6 +2,7 @@
 #define _PLAYERBOT_RAIDSTRATEGYCONTEXT_H_
 
 #include "Strategy.h"
+#include "RaidZGStrategy.h"
 #include "RaidAq20Strategy.h"
 #include "RaidMcStrategy.h"
 #include "RaidBwlStrategy.h"
@@ -21,6 +22,7 @@ class RaidStrategyContext : public NamedObjectContext<Strategy>
 public:
     RaidStrategyContext() : NamedObjectContext<Strategy>(false, true)
     {
+        creators["zg"] = &RaidStrategyContext::zg;
         creators["aq20"] = &RaidStrategyContext::aq20;
         creators["mc"] = &RaidStrategyContext::mc;
         creators["bwl"] = &RaidStrategyContext::bwl;
@@ -37,6 +39,7 @@ public:
     }
 
 private:
+    static Strategy* zg(PlayerbotAI* botAI) { return new RaidZGStrategy(botAI); }
     static Strategy* aq20(PlayerbotAI* botAI) { return new RaidAq20Strategy(botAI); }
     static Strategy* mc(PlayerbotAI* botAI) { return new RaidMcStrategy(botAI); }
     static Strategy* bwl(PlayerbotAI* botAI) { return new RaidBwlStrategy(botAI); }

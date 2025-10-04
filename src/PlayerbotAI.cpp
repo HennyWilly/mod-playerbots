@@ -1460,6 +1460,9 @@ void PlayerbotAI::ApplyInstanceStrategies(uint32 mapId, bool tellMaster)
         case 249:
             strategyName = "onyxia";  // Onyxia's Lair
             break;
+        case 309:
+			strategyName = "zg";  // Zul'Gurub
+            break;
         case 409:
             strategyName = "mc";  // Molten Core
             break;
