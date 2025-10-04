@@ -23,4 +23,12 @@ public:
     bool Execute(Event event) override;
 };
 
+class ZgJeklikPhaseOnePositionAction : public MovementAction
+{
+public:
+    ZgJeklikPhaseOnePositionAction(PlayerbotAI* ai) : MovementAction(ai, "zg jeklik phase one position") {}
+    bool isUseful() override;
+    bool Execute(Event event) override;
+};
+
 #endif

@@ -8,3 +8,10 @@ bool ZgVenoxisPhaseOneTrigger::IsActive()
         return boss->GetHealthPct() > 50;
     return false;
 }
+
+bool ZgJeklikPhaseOneTrigger::IsActive()
+{
+    if (const Unit* boss = AI_VALUE2(Unit*, "find target", "high priestess jeklik"))
+        return boss->GetHealthPct() > 50;
+    return false;
+}

@@ -18,4 +18,11 @@ public:
     bool IsActive() override;
 };
 
+class ZgJeklikPhaseOneTrigger : public Trigger
+{
+public:
+    ZgJeklikPhaseOneTrigger(PlayerbotAI* botAI) : Trigger(botAI, "zg jeklik phase one") {}
+    bool IsActive() override;
+};
+
 #endif

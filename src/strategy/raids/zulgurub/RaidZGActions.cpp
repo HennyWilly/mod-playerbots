@@ -61,3 +61,25 @@ bool ZgVenoxisPhaseOnePositionAction::Execute(Event event)
     }
     return false;
 }
+
+bool ZgJeklikPhaseOnePositionAction::isUseful() { return PlayerbotAI::IsRanged(bot); }
+
+bool ZgJeklikPhaseOnePositionAction::Execute(Event event)
+{
+    Unit* boss = AI_VALUE2(Unit*, "find target", "high priestess jeklik");
+    if (!boss)
+        return false;
+
+    constexpr float sonicBoomRadius = 20.0f;
+    constexpr float distanceExtra = 1.0f;
+
+    float distanceToBoss = bot->GetExactDist2d(boss);
+    if (distanceToBoss < sonicBoomRadius + distanceExtra)
+    {
+        bot->AttackStop();
+        bot->InterruptNonMeleeSpells(false);
+        return MoveAway(boss, sonicBoomRadius + distanceExtra - distanceToBoss);
+    }
+
+    return false;
+}
