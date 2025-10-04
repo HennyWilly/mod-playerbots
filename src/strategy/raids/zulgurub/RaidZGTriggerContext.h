@@ -10,11 +10,11 @@ class RaidZGTriggerContext : public NamedObjectContext<Trigger>
 public:
     RaidZGTriggerContext()
     {
-        // creators["mc living bomb debuff"] = &RaidZGTriggerContext::living_bomb_debuff;
+        creators["zg venoxis phase one"] = &RaidZGTriggerContext::venoxis_phase_one;
     }
 
 private:
-    // static Trigger* living_bomb_debuff(PlayerbotAI* ai) { return new McLivingBombDebuffTrigger(ai); }
+    static Trigger* venoxis_phase_one(PlayerbotAI* ai) { return new ZgVenoxisPhaseOneTrigger(ai); }
 };
 
 #endif

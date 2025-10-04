@@ -10,11 +10,13 @@ class RaidZGActionContext : public NamedObjectContext<Action>
 public:
     RaidZGActionContext()
     {
-        // creators["mc check should move from group"] = &RaidZGActionContext::check_should_move_from_group;
+        creators["zg venoxis phase one tank attack"] = &RaidZGActionContext::venoxis_phase_one_tank_attack;
+        creators["zg venoxis phase one position"] = &RaidZGActionContext::venoxis_phase_one_position;
     }
 
 private:
-    // static Action* check_should_move_from_group(PlayerbotAI* ai) { return new McCheckShouldMoveFromGroupAction(ai); }
+    static Action* venoxis_phase_one_tank_attack(PlayerbotAI* ai) { return new ZgVenoxisPhaseOneTankAttackAction(ai); }
+    static Action* venoxis_phase_one_position(PlayerbotAI* ai) { return new ZgVenoxisPhaseOnePositionAction(ai); }
 };
 
 #endif

@@ -5,11 +5,17 @@
 #include "Playerbots.h"
 #include "Trigger.h"
 
-// class McLivingBombDebuffTrigger : public Trigger
-// {
-// public:
-//     McLivingBombDebuffTrigger(PlayerbotAI* botAI) : Trigger(botAI, "mc living bomb debuff") {}
-//     bool IsActive() override;
-// };
+enum ZulGurubCreatureIDs
+{
+    // Venoxis
+    NPC_RAZZASHI_COBRA              = 11373
+};
+
+class ZgVenoxisPhaseOneTrigger : public Trigger
+{
+public:
+    ZgVenoxisPhaseOneTrigger(PlayerbotAI* botAI) : Trigger(botAI, "zg venoxis phase one") {}
+    bool IsActive() override;
+};
 
 #endif
