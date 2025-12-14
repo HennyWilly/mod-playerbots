@@ -2,11 +2,6 @@
 #define _PLAYERBOT_RAIDBWLACTIONS_H
 
 #include "Action.h"
-#include "AttackAction.h"
-#include "GenericActions.h"
-#include "MovementActions.h"
-#include "PlayerbotAI.h"
-#include "Playerbots.h"
 
 class BwlOnyxiaScaleCloakAuraCheckAction : public Action
 {

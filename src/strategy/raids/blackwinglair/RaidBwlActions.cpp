@@ -1,32 +1,34 @@
 #include "RaidBwlActions.h"
 
 #include "Playerbots.h"
+#include "RaidBwlHelpers.h"
+
+using namespace BwlHelpers;
 
 bool BwlOnyxiaScaleCloakAuraCheckAction::Execute(Event event)
 {
-    bot->AddAura(22683, bot);
+    // TODO Only enable in cheat mode?
+    bot->AddAura(SPELL_ONYXIA_SCALE_CLOAK, bot);
     return true;
 }
 
-bool BwlOnyxiaScaleCloakAuraCheckAction::isUseful() { return !bot->HasAura(22683); }
+bool BwlOnyxiaScaleCloakAuraCheckAction::isUseful()
+{
+    return !bot->HasAura(SPELL_ONYXIA_SCALE_CLOAK);
+}
 
 bool BwlTurnOffSuppressionDeviceAction::Execute(Event event)
 {
-    GuidVector gos = AI_VALUE(GuidVector, "nearest game objects");
-    for (GuidVector::iterator i = gos.begin(); i != gos.end(); i++)
+    if (auto suppressionDevice = GetSuppressionDeviceWithinRange(botAI))
     {
-        GameObject* go = botAI->GetGameObject(*i);
-        if (!go)
-        {
-            continue;
-        }
-        if (go->GetEntry() != 179784 || go->GetDistance(bot) >= 15.0f || go->GetGoState() != GO_STATE_READY)
-        {
-            continue;
-        }
-        go->SetGoState(GO_STATE_ACTIVE);
+        suppressionDevice->SetGoState(GO_STATE_ACTIVE);
+        return true;
     }
-    return true;
+    return false;
 }
 
-bool BwlUseHourglassSandAction::Execute(Event event) { return botAI->CastSpell(23645, bot); }
+bool BwlUseHourglassSandAction::Execute(Event event)
+{
+    // TODO Only use if Hourglass Sand in inventory?
+    return botAI->CastSpell(SPELL_HOURGLASS_SAND, bot);
+}
