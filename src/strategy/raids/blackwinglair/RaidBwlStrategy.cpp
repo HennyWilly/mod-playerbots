@@ -14,7 +14,15 @@ void RaidBwlStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 
     // Razorgore
     // TODO P1 - Attack adds that attack Razorgore.
-    // TODO Control Razorgore if the real player dies? (Fallback)
+    // TODO P1 - Don't attack Razorgore if not controlled. (Only tank, no dps)
+    // TODO P1 - Control Razorgore if the real player dies? (Fallback)
+    // TODO P2 - War Stomp: Keep ranged bots away
+    triggers.push_back(
+        new TriggerNode("bwl razorgore fire resistance",
+                        NextAction::array(0, new NextAction("bwl razorgore fire resistance", ACTION_RAID), nullptr)));
+    triggers.push_back(
+        new TriggerNode("bwl razorgore phase 2 mark target",
+                        NextAction::array(0, new NextAction("bwl razorgore mark boss skull", ACTION_RAID), nullptr)));
 
     // Vaelastrasz
     // TODO Fire resistence

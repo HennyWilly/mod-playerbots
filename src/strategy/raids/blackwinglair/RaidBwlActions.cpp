@@ -2,8 +2,26 @@
 
 #include "Playerbots.h"
 #include "RaidBwlHelpers.h"
+#include "RtiTargetValue.h"
 
 using namespace BwlHelpers;
+
+bool BwlRazorgoreMarkBossSkullAction::Execute(Event event)
+{
+    if (Unit* boss = AI_VALUE2(Unit*, "find target", "razorgore the untamed"))
+    {
+        if (Group* group = bot->GetGroup())
+        {
+            ObjectGuid currentSkullGuid = group->GetTargetIcon(RtiTargetValue::skullIndex);
+            if (currentSkullGuid.IsEmpty() || currentSkullGuid != boss->GetGUID())
+            {
+                group->SetTargetIcon(RtiTargetValue::skullIndex, bot->GetGUID(), boss->GetGUID());
+                return true;
+            }
+        }
+    }
+    return false;
+}
 
 bool BwlOnyxiaScaleCloakAuraCheckAction::Execute(Event event)
 {

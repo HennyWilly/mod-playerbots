@@ -10,13 +10,22 @@ class RaidBwlTriggerContext : public NamedObjectContext<Trigger>
 public:
     RaidBwlTriggerContext()
     {
-        creators["bwl suppression device"] = &RaidBwlTriggerContext::bwl_suppression_device;
-        creators["bwl affliction bronze"] = &RaidBwlTriggerContext::bwl_affliction_bronze;
+        // Common
+        creators["bwl suppression device"] = &RaidBwlTriggerContext::suppression_device;
+
+        // Razorgore
+        creators["bwl razorgore fire resistance"] = &RaidBwlTriggerContext::razorgore_fire_resistance;
+        creators["bwl razorgore phase 2 mark target"] = &RaidBwlTriggerContext::razorgore_phase_2_mark_target;
+
+        // Chromaggus
+        creators["bwl affliction bronze"] = &RaidBwlTriggerContext::affliction_bronze;
     }
 
 private:
-    static Trigger* bwl_suppression_device(PlayerbotAI* botAI) { return new BwlSuppressionDeviceTrigger(botAI); }
-    static Trigger* bwl_affliction_bronze(PlayerbotAI* botAI) { return new BwlAfflictionBronzeTrigger(botAI); }
+    static Trigger* razorgore_fire_resistance(PlayerbotAI* botAI) { return new BwlRazorgoreP2FireResistanceTrigger(botAI); }
+    static Trigger* razorgore_phase_2_mark_target(PlayerbotAI* botAI) { return new BwlRazorgoreP2TriggerMarkTarget(botAI); }
+    static Trigger* suppression_device(PlayerbotAI* botAI) { return new BwlSuppressionDeviceTrigger(botAI); }
+    static Trigger* affliction_bronze(PlayerbotAI* botAI) { return new BwlAfflictionBronzeTrigger(botAI); }
 };
 
 #endif

@@ -3,10 +3,19 @@
 
 #include "Action.h"
 
+class BwlRazorgoreMarkBossSkullAction : public Action
+{
+public:
+    BwlRazorgoreMarkBossSkullAction(PlayerbotAI* botAI)
+        : Action(botAI, "bwl razorgore mark boss skull") {}
+    bool Execute(Event event) override;
+};
+
 class BwlOnyxiaScaleCloakAuraCheckAction : public Action
 {
 public:
-    BwlOnyxiaScaleCloakAuraCheckAction(PlayerbotAI* botAI) : Action(botAI, "bwl onyxia scale cloak aura check") {}
+    BwlOnyxiaScaleCloakAuraCheckAction(PlayerbotAI* botAI)
+        : Action(botAI, "bwl onyxia scale cloak aura check") {}
     bool Execute(Event event) override;
     bool isUseful() override;
 };
@@ -14,14 +23,16 @@ public:
 class BwlTurnOffSuppressionDeviceAction : public Action
 {
 public:
-    BwlTurnOffSuppressionDeviceAction(PlayerbotAI* botAI) : Action(botAI, "bwl turn off suppression device") {}
+    BwlTurnOffSuppressionDeviceAction(PlayerbotAI* botAI)
+        : Action(botAI, "bwl turn off suppression device") {}
     bool Execute(Event event) override;
 };
 
 class BwlUseHourglassSandAction : public Action
 {
 public:
-    BwlUseHourglassSandAction(PlayerbotAI* botAI) : Action(botAI, "bwl use hourglass sand") {}
+    BwlUseHourglassSandAction(PlayerbotAI* botAI)
+        : Action(botAI, "bwl use hourglass sand") {}
     bool Execute(Event event) override;
 };
 

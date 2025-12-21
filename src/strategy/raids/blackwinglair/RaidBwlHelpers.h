@@ -16,9 +16,11 @@ namespace BwlHelpers
     };
     enum BwlGameObjects
     {
+        GO_BLACK_DRAGON_EGG = 177807,
         GO_SUPPRESSION_DEVICE = 179784
     };
 
+    bool AreRazorgoreEggsAlive(const Player* bot);
     GameObject* GetSuppressionDeviceWithinRange(PlayerbotAI* botAI);
 }
 
