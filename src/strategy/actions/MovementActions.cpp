@@ -1677,6 +1677,96 @@ bool MovementAction::MoveFromGroup(float distance)
     return false;
 }
 
+bool MovementAction::MoveFromOtherPlayers(float minDistance)
+{
+    Group* group = bot->GetGroup();
+    if (!group)
+        return false;
+
+    uint32 mapId = bot->GetMapId();
+
+    float closest = FLT_MAX;
+    for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
+    {
+        Player* p = gref->GetSource();
+        if (!p || p == bot || !p->IsAlive() || p->GetMapId() != mapId)
+            continue;
+
+        float dist = bot->GetDistance2d(p);
+        if (dist < closest)
+        {
+            closest = dist;
+        }
+    }
+    if (closest >= minDistance)
+        return false; // already far enough away
+
+    float botX = bot->GetPositionX();
+    float botY = bot->GetPositionY();
+    float botZ = bot->GetPositionZ();
+
+    const float maxDist = minDistance * 3.0f;
+    const float stepDist = minDistance * 0.25f;
+    const float stepAngle = M_PI / 12;
+    for (float testDist = minDistance; testDist <= maxDist; testDist += stepDist)
+    {
+        for (float delta = 0.0f; delta <= M_PI / 2; delta += stepAngle)
+        {
+            for (int sign = -1; sign <= 1; sign += 2)
+            {
+                if (delta == 0.0f && sign == -1)
+                    continue;
+
+                float angle = sign * delta;
+
+                float dx = botX + cos(angle) * testDist;
+                float dy = botY + sin(angle) * testDist;
+                float dz = botZ;
+                bool exact = true;
+
+                if (!bot->GetMap()->CheckCollisionAndGetValidCoords(bot,
+                    botX, botY, botZ,
+                    dx, dy, dz))
+                {
+                    exact = false;
+                    dx = botX + cos(angle) * testDist;
+                    dy = botY + sin(angle) * testDist;
+                    dz = botZ;
+                }
+
+                // Check if the position is far enough away from all other players
+                bool valid = true;
+                for (GroupReference* gref = group->GetFirstMember(); gref; gref = gref->next())
+                {
+                    Player* p = gref->GetSource();
+                    if (!p || p == bot || !p->IsAlive() || p->GetMapId() != mapId)
+                        continue;
+
+                    if (p->GetDistance2d(dx, dy) < minDistance)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (!valid)
+                    continue;
+
+                if (MoveTo(mapId, dx, dy, dz, false, false, true,
+                           exact, MovementPriority::MOVEMENT_COMBAT, false, false))
+                {
+                    LOG_INFO("playerbots", "[{}] MoveTo({}, {}, {}, exact={})",
+                        bot->GetName(), dx, dy, dz, exact ? "true" : "false"
+                    );
+                    return true;
+                }
+            }
+        }
+    }
+
+    LOG_INFO("playerbots", "[{}] No target location found!", bot->GetName());
+    return false;
+}
+
 bool MovementAction::Move(float angle, float distance)
 {
     float x = bot->GetPositionX() + cos(angle) * distance;

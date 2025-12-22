@@ -1,13 +1,21 @@
 #ifndef _PLAYERBOT_RAIDBWLACTIONS_H
 #define _PLAYERBOT_RAIDBWLACTIONS_H
 
-#include "Action.h"
+#include "MovementActions.h"
 
 class BwlRazorgoreMarkBossSkullAction : public Action
 {
 public:
     BwlRazorgoreMarkBossSkullAction(PlayerbotAI* botAI)
         : Action(botAI, "bwl razorgore mark boss skull") {}
+    bool Execute(Event event) override;
+};
+
+class BwlVaelastraszMoveFromGroupAction : public MovementAction
+{
+public:
+    BwlVaelastraszMoveFromGroupAction(PlayerbotAI* botAI)
+        : MovementAction(botAI, "bwl vaelastrasz move from group") {}
     bool Execute(Event event) override;
 };
 

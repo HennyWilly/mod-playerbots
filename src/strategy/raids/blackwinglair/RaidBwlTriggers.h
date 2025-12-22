@@ -30,6 +30,22 @@ public:
     bool IsActive() override;
 };
 
+class BwlVaelastraszDragonPositioningTrigger : public Trigger
+{
+public:
+    BwlVaelastraszDragonPositioningTrigger(PlayerbotAI* botAI)
+        : Trigger(botAI, "bwl vaelastrasz dragon positioning") { }
+    bool IsActive() override;
+};
+
+class BwlVaelastraszBurningAdrenalineTrigger : public Trigger
+{
+public:
+    BwlVaelastraszBurningAdrenalineTrigger(PlayerbotAI* botAI)
+        : Trigger(botAI, "bwl vaelastrasz burning adrenaline") { }
+    bool IsActive() override;
+};
+
 class BwlAfflictionBronzeTrigger : public Trigger
 {
 public:

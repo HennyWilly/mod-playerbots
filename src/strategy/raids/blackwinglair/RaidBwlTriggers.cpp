@@ -30,6 +30,18 @@ bool BwlRazorgoreP2TriggerMarkTarget::IsActive()
     return false;
 }
 
+bool BwlVaelastraszDragonPositioningTrigger::IsActive()
+{
+    return AI_VALUE2(Unit*, "find target", "vaelastrasz the corrupt") &&
+        !PlayerbotAI::IsTank(bot) && !PlayerbotAI::IsRangedDps(bot);
+}
+
+bool BwlVaelastraszBurningAdrenalineTrigger::IsActive()
+{
+    // No check for Vaelastrasz, because bots may have burning adrenaline even after Vaelastrasz died.
+    return bot->HasAura(SPELL_BURNING_ADRENALINE);
+}
+
 bool BwlAfflictionBronzeTrigger::IsActive()
 {
     return bot->HasAura(SPELL_BROOD_AFFLICTION_BRONZE);

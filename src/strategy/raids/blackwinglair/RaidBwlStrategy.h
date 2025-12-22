@@ -12,7 +12,7 @@ public:
     RaidBwlStrategy(PlayerbotAI* ai) : Strategy(ai) {}
     std::string const getName() override { return "bwl"; }
     void InitTriggers(std::vector<TriggerNode*>& triggers) override;
-    // virtual void InitMultipliers(std::vector<Multiplier*> &multipliers) override;
+    void InitMultipliers(std::vector<Multiplier*> &multipliers) override;
 };
 
 #endif

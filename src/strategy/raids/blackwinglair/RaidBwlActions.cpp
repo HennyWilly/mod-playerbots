@@ -6,6 +6,8 @@
 
 using namespace BwlHelpers;
 
+static constexpr float BURNING_ADRENALINE_DISTANCE = 10.0f;
+
 bool BwlRazorgoreMarkBossSkullAction::Execute(Event event)
 {
     if (Unit* boss = AI_VALUE2(Unit*, "find target", "razorgore the untamed"))
@@ -21,6 +23,14 @@ bool BwlRazorgoreMarkBossSkullAction::Execute(Event event)
         }
     }
     return false;
+}
+
+bool BwlVaelastraszMoveFromGroupAction::Execute(Event event)
+{
+    // TODO Handle tanks differently!
+
+    // No check for Vaelastrasz, because bots may have burning adrenaline even after Vaelastrasz died.
+    return MoveFromOtherPlayers(BURNING_ADRENALINE_DISTANCE);
 }
 
 bool BwlOnyxiaScaleCloakAuraCheckAction::Execute(Event event)

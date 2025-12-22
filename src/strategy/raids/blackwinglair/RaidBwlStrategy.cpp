@@ -1,5 +1,6 @@
 #include "RaidBwlStrategy.h"
 
+#include "RaidBwlMultipliers.h"
 #include "Strategy.h"
 
 void RaidBwlStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
@@ -25,10 +26,16 @@ void RaidBwlStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
                         NextAction::array(0, new NextAction("bwl razorgore mark boss skull", ACTION_RAID), nullptr)));
 
     // Vaelastrasz
-    // TODO Fire resistence
-    // TODO Dragon strategy for breath/cleave and tail sweep
+    triggers.push_back(
+        new TriggerNode("bwl vaelastrasz fire resistance",
+                        NextAction::array(0, new NextAction("bwl vaelastrasz fire resistance", ACTION_RAID), nullptr)));
+    triggers.push_back(
+        new TriggerNode("bwl vaelastrasz dragon positioning",
+                        NextAction::array(0, new NextAction("rear flank", ACTION_MOVE + 4), nullptr)));
+    triggers.push_back(
+        new TriggerNode("bwl vaelastrasz burning adrenaline",
+                        NextAction::array(0, new NextAction("bwl vaelastrasz move from group", ACTION_RAID + 1), nullptr)));
     // TODO Tank swap if main tank has Burning Adrenaline
-    // TODO Move away fron raid before exploding
 
     // Lashlayer
     // TODO Tank positioning (knock back)
@@ -60,4 +67,9 @@ void RaidBwlStrategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     // TODO P2 - Fear (strategy or out range)
     // TODO P2 - Handle class calls
     // TODO P3 - Handle Bone Constructs
+}
+
+void RaidBwlStrategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
+{
+    multipliers.push_back(new VaelastraszMultiplier(botAI));
 }

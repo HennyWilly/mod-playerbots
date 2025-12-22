@@ -7,6 +7,9 @@ namespace BwlHelpers
 {
     enum BwlSpells
     {
+        // Vaelastrasz
+        SPELL_BURNING_ADRENALINE = 18173,
+
         // Chromaggus
         SPELL_HOURGLASS_SAND = 23645,
         SPELL_BROOD_AFFLICTION_BRONZE = 23170,

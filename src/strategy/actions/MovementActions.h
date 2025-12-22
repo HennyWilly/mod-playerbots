@@ -58,6 +58,7 @@ protected:
     void UpdateMovementState();
     bool MoveAway(Unit* target, float distance = sPlayerbotAIConfig->fleeDistance, bool backwards = false);
     bool MoveFromGroup(float distance);
+    bool MoveFromOtherPlayers(float minDistance);
     bool Move(float angle, float distance);
     bool MoveInside(uint32 mapId, float x, float y, float z, float distance = sPlayerbotAIConfig->followDistance,
                     MovementPriority priority = MovementPriority::MOVEMENT_NORMAL);
