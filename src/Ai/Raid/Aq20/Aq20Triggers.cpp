@@ -5,7 +5,11 @@
  */
 
 #include "Aq20Triggers.h"
-#include "Aq20Utils.h"
+
+#include "Aq20Helpers.h"
+#include "Playerbots.h"
+
+using namespace Aq20Helpers;
 
 bool Aq20MoveToCrystalTrigger::IsActive()
 {
@@ -14,18 +18,18 @@ bool Aq20MoveToCrystalTrigger::IsActive()
         if (boss->IsInCombat())
         {
             // if buff is active move to crystal
-            if (RaidAq20Utils::IsOssirianBuffActive(boss))
+            if (IsOssirianBuffActive(boss))
                 return true;
 
             // if buff is not active a debuff will be, buff becomes active once debuff expires
             // so move to crystal when debuff almost done, or based debuff time left and
             // distance bot is from crystal (ie: start moving early enough to make it)
-            int32 debuffTimeRemaining = RaidAq20Utils::GetOssirianDebuffTimeRemaining(boss);
+            int32 debuffTimeRemaining = GetOssirianDebuffTimeRemaining(boss);
             if (debuffTimeRemaining < 5000)
                 return true;
             if (debuffTimeRemaining < 30000)
             {
-                if (GameObject* crystal = RaidAq20Utils::GetNearestCrystal(boss))
+                if (GameObject* crystal = GetNearestCrystal(boss))
                 {
                     float botDist = bot->GetDistance(crystal);
                     float timeToReach = botDist / bot->GetSpeed(MOVE_RUN);
