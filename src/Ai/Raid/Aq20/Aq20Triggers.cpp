@@ -18,6 +18,14 @@ bool Aq20KurinnaxxSandTrapNearbyTrigger::IsActive()
     return GetNearestSandTrap(bot);
 }
 
+bool Aq20KurinnaxxPositioningTrigger::IsActive()
+{
+    // Prevent non-tanks from rotating the boss.
+    if (Unit* boss = AI_VALUE2(Unit*, "find target", "kurinnaxx"))
+        return boss->GetVictim() != bot;
+    return false;
+}
+
 bool Aq20MoveToCrystalTrigger::IsActive()
 {
     if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))

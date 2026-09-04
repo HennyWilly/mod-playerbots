@@ -17,10 +17,17 @@ public:
     bool Execute(Event event) override;
 };
 
+class Aq20KurinnaxxAvoidWideSlashAction : public MovementAction
+{
+public:
+    Aq20KurinnaxxAvoidWideSlashAction(PlayerbotAI* botAI) : MovementAction(botAI, "aq20 kurinnaxx avoid wide slash") {}
+    bool Execute(Event event) override;
+};
+
 class Aq20UseCrystalAction : public MovementAction
 {
 public:
-    Aq20UseCrystalAction(PlayerbotAI* botAI, std::string const name = "aq20 use crystal") : MovementAction(botAI, name) {}
+    Aq20UseCrystalAction(PlayerbotAI* botAI, std::string const& name = "aq20 use crystal") : MovementAction(botAI, name) {}
     bool Execute(Event event) override;
 };
 #endif
