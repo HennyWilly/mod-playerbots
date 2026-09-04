@@ -24,6 +24,48 @@ bool Aq20KurinnaxxAvoidSandTrapAction::Execute(Event /*event*/)
     return false;
 }
 
+// TODO Works but copy of BwlRazorgoreAvoidAoeAction::Execute...
+bool Aq20KurinnaxxAvoidWideSlashAction::Execute(Event /*event*/)
+{
+    Unit* boss = AI_VALUE2(Unit*, "find target", "kurinnaxx");
+    if (!boss)
+        return false;
+
+    // The current target should not move.
+    // Also prevents non-tanks from rotating the boss if they have aggro.
+    if (boss->GetVictim() == bot)
+        return false;
+
+    float distance = bot->GetDistance2d(boss);
+
+    // Bot is too close and standing in Kurinnaxx' frontal cone
+    if (distance <= 10.0f && boss->HasInArc(M_PI_2, bot))
+    {
+        // Target position: directly behind the boss with a small random fuzz
+        // to prevent all bots stacking on the same spot
+        float moveAngle = boss->GetOrientation() + M_PI + frand(-M_PI_4, M_PI_4);
+        float kurinnaxxRadius = PlayerbotAI::IsRanged(bot) ? 15.0f : 3.0f;
+
+        float targetMoveX = boss->GetPositionX() + kurinnaxxRadius * cos(moveAngle);
+        float targetMoveY = boss->GetPositionY() + kurinnaxxRadius * sin(moveAngle);
+
+        // Move incrementally toward the target. Allows course correction.
+        float dX = targetMoveX - bot->GetPositionX();
+        float dY = targetMoveY - bot->GetPositionY();
+        float dist = sqrt(dX * dX + dY * dY);
+        if (dist == 0.0f)
+            dist = 0.1f;
+
+        float moveX = bot->GetPositionX() + (dX / dist) * 3.0f;
+        float moveY = bot->GetPositionY() + (dY / dist) * 3.0f;
+
+        return MoveTo(boss->GetMapId(), moveX, moveY, bot->GetPositionZ(), false, false,
+                      false, false, MovementPriority::MOVEMENT_COMBAT, true);
+    }
+
+    return false;
+}
+
 bool Aq20UseCrystalAction::Execute(Event /*event*/)
 {
     if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))
