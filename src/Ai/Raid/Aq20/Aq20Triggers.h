@@ -17,6 +17,13 @@ public:
     bool IsActive() override;
 };
 
+class Aq20KurinnaxxPositioningTrigger : public Trigger
+{
+public:
+    Aq20KurinnaxxPositioningTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 kurinnaxx positioning") {}
+    bool IsActive() override;
+};
+
 class Aq20MoveToCrystalTrigger : public Trigger
 {
 public:

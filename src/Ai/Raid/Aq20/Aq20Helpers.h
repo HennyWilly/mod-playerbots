@@ -4,8 +4,8 @@
  * or (at your option) any later version.
  */
 
-#ifndef PLAYERBOTS_AQ20UTILS_H
-#define PLAYERBOTS_AQ20UTILS_H
+#ifndef PLAYERBOTS_AQ20HELPERS_H
+#define PLAYERBOTS_AQ20HELPERS_H
 
 #include "GameObject.h"
 
