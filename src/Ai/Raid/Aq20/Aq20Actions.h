@@ -9,7 +9,13 @@
 
 #include "MovementActions.h"
 #include "PlayerbotAI.h"
-#include "Playerbots.h"
+
+class Aq20KurinnaxxAvoidSandTrapAction : public MovementAction
+{
+public:
+    Aq20KurinnaxxAvoidSandTrapAction(PlayerbotAI* botAI, std::string const& name = "aq20 kurinnaxx avoid sand trap") : MovementAction(botAI, name) {}
+    bool Execute(Event event) override;
+};
 
 class Aq20UseCrystalAction : public MovementAction
 {

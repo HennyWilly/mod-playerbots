@@ -10,6 +10,12 @@
 void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
     triggers.push_back(
+        new TriggerNode("aq20 kurinnaxx sand trap nearby",
+            { NextAction("aq20 kurinnaxx avoid sand trap", ACTION_RAID + 4) }));
+
+
+
+    triggers.push_back(
         new TriggerNode("aq20 move to crystal",
             { NextAction("aq20 use crystal", ACTION_RAID) }));
 

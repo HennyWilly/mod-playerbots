@@ -16,10 +16,12 @@ class RaidAq20ActionContext : public NamedObjectContext<Action>
 public:
     RaidAq20ActionContext()
     {
+        creators["aq20 kurinnaxx avoid sand trap"] = &RaidAq20ActionContext::kurinnaxx_avoid_sand_trap;
         creators["aq20 use crystal"] = &RaidAq20ActionContext::use_crystal;
     }
 
 private:
+    static Action* kurinnaxx_avoid_sand_trap(PlayerbotAI* ai) { return new Aq20KurinnaxxAvoidSandTrapAction(ai); }
     static Action* use_crystal(PlayerbotAI* ai) { return new Aq20UseCrystalAction(ai); }
 };
 

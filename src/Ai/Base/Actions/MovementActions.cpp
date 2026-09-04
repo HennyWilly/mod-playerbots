@@ -1518,7 +1518,7 @@ void MovementAction::ClearIdleState()
     context->GetValue<PositionMap&>("position")->Get()["random"].Reset();
 }
 
-bool MovementAction::MoveAway(Unit* target, float distance, bool backwards)
+bool MovementAction::MoveAway(WorldObject* target, float distance, bool backwards)
 {
     if (!target)
     {
