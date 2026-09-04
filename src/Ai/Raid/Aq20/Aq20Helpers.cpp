@@ -17,6 +17,13 @@ namespace Aq20Helpers
         Aq20Spells::SPELL_SHADOW_WEAKNESS
     };
 
+    GameObject* GetNearestSandTrap(Unit const* bot)
+    {
+        return bot ?
+            bot->FindNearestGameObject(static_cast<uint32>(Aq20GameObjects::GO_SAND_TRAP), KURINNAXX_SAND_TRAP_DISTANCE) :
+            nullptr;
+    }
+
     bool IsOssirianBuffActive(Unit const* ossirian)
     {
         return ossirian && ossirian->HasAura(static_cast<uint32>(Aq20Spells::SPELL_STRENGTH_OF_OSSIRIAN));

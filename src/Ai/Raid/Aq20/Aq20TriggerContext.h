@@ -15,10 +15,12 @@ class RaidAq20TriggerContext : public NamedObjectContext<Trigger>
 public:
     RaidAq20TriggerContext()
     {
+        creators["aq20 kurinnaxx sand trap nearby"] = &RaidAq20TriggerContext::kurinnaxx_sand_trap_nearby;
         creators["aq20 move to crystal"] = &RaidAq20TriggerContext::move_to_crystal;
     }
 
 private:
+    static Trigger* kurinnaxx_sand_trap_nearby(PlayerbotAI* ai) { return new Aq20KurinnaxxSandTrapNearbyTrigger(ai); }
     static Trigger* move_to_crystal(PlayerbotAI* ai) { return new Aq20MoveToCrystalTrigger(ai); }
 };
 
