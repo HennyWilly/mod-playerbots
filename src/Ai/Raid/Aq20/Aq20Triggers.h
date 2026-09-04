@@ -8,7 +8,6 @@
 #define PLAYERBOTS_AQ20TRIGGERS_H
 
 #include "PlayerbotAI.h"
-#include "Playerbots.h"
 #include "Trigger.h"
 
 class Aq20MoveToCrystalTrigger : public Trigger
