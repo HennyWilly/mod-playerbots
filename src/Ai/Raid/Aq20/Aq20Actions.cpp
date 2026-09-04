@@ -5,13 +5,17 @@
  */
 
 #include "Aq20Actions.h"
-#include "Aq20Utils.h"
+
+#include "Aq20Helpers.h"
+#include "Playerbots.h"
+
+using namespace Aq20Helpers;
 
 bool Aq20UseCrystalAction::Execute(Event /*event*/)
 {
     if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))
     {
-        if (GameObject* crystal = RaidAq20Utils::GetNearestCrystal(boss))
+        if (GameObject* crystal = GetNearestCrystal(boss))
         {
             float botDist = bot->GetDistance(crystal);
             if (botDist > INTERACTION_DISTANCE)
@@ -31,8 +35,7 @@ bool Aq20UseCrystalAction::Execute(Event /*event*/)
             // don't activate crystal if boss doesn't have buff yet AND isn't going to have it soon
             // (though ideally bot should activate it ~5 seconds early due to time it takes for
             // crystal to activate and remove buff)
-            if (!RaidAq20Utils::IsOssirianBuffActive(boss) &&
-                RaidAq20Utils::GetOssirianDebuffTimeRemaining(boss) > 5000)
+            if (!IsOssirianBuffActive(boss) && GetOssirianDebuffTimeRemaining(boss) > 5000)
                 return false;
 
             // this makes crystal do its animation (then disappear after)
