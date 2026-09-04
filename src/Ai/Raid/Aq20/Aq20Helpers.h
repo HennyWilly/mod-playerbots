@@ -24,6 +24,9 @@ namespace Aq20Helpers
 
     enum class Aq20GameObjects : uint32
     {
+        // Kurinnaxx
+        GO_SAND_TRAP = 180647,
+
         // Ossirian the Unscarred
         GO_OSSIRIAN_CRYSTAL = 180619
     };
@@ -33,6 +36,9 @@ namespace Aq20Helpers
         // TODO
     };
 
+    constexpr float KURINNAXX_SAND_TRAP_DISTANCE = 10.0f;
+
+    GameObject* GetNearestSandTrap(Unit const* bot);
     bool IsOssirianBuffActive(Unit const* ossirian);
     int32 GetOssirianDebuffTimeRemaining(Unit const* ossirian);
     GameObject* GetNearestCrystal(Unit const* ossirian);
