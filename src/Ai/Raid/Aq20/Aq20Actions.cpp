@@ -11,6 +11,19 @@
 
 using namespace Aq20Helpers;
 
+bool Aq20KurinnaxxAvoidSandTrapAction::Execute(Event /*event*/)
+{
+    if (GameObject* sandTrap = GetNearestSandTrap(bot))
+    {
+        // Stop channeling spell first
+        bot->AttackStop();
+        bot->CastStop();
+
+        return MoveAway(sandTrap, KURINNAXX_SAND_TRAP_DISTANCE);
+    }
+    return false;
+}
+
 bool Aq20UseCrystalAction::Execute(Event /*event*/)
 {
     if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))

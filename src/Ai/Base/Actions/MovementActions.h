@@ -56,7 +56,7 @@ protected:
     bool Flee(Unit* target);
     void ClearIdleState();
     void UpdateMovementState();
-    bool MoveAway(Unit* target, float distance = sPlayerbotAIConfig.FleeDistance, bool backwards = false);
+    bool MoveAway(WorldObject* target, float distance = sPlayerbotAIConfig.FleeDistance, bool backwards = false);
     bool MoveFromGroup(float distance);
     bool Move(float angle, float distance);
     bool GetRandomPointInCone(Position const& origin, float orientation, float halfArc, float minDistance,

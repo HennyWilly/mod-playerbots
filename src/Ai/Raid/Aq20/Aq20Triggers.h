@@ -10,6 +10,13 @@
 #include "PlayerbotAI.h"
 #include "Trigger.h"
 
+class Aq20KurinnaxxSandTrapNearbyTrigger : public Trigger
+{
+public:
+    Aq20KurinnaxxSandTrapNearbyTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 kurinnaxx sand trap nearby") {}
+    bool IsActive() override;
+};
+
 class Aq20MoveToCrystalTrigger : public Trigger
 {
 public:

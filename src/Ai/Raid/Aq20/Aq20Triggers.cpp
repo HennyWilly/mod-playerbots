@@ -11,6 +11,13 @@
 
 using namespace Aq20Helpers;
 
+bool Aq20KurinnaxxSandTrapNearbyTrigger::IsActive()
+{
+    if (!AI_VALUE2(Unit*, "find target", "kurinnaxx"))
+        return false;
+    return GetNearestSandTrap(bot);
+}
+
 bool Aq20MoveToCrystalTrigger::IsActive()
 {
     if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))
