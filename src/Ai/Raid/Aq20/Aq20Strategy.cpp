@@ -26,9 +26,11 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     // TODO P2: burn down the boss; maybe safe CDs for P2 because of Creeping Plague?
 
     // Moam
-    // TODO P1: Drain mana with Viper Sting, Mana Burn, and Drain Mana
+    triggers.push_back(new TriggerNode("aq20 moam can drain mana", {
+        NextAction("aq20 moam drain mana", ACTION_RAID) }));
+    // TODO P1: Drain mana with Mana Burn, and Drain Mana
     // TODO P1: Maybe: ranged stay away because of Trample?
-    // TODO P2: Ignore boss and kill adds
+    // TODO P2: Ignore boss and kill adds (AppendTargetExclusions)
 
     // Ayamiss the Hunter
     triggers.push_back(new TriggerNode("aq20 ayamiss nature resistance", {
@@ -46,6 +48,7 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 void RaidAq20Strategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
 {
     multipliers.push_back(new KurinnaxxTankMultiplier(botAI));
+    multipliers.push_back(new MoamMultiplier(botAI));
 }
 
 void RaidAq20Strategy::AppendTargetExclusions(GuidSet& exclusions, TargetValueExclusionType type)

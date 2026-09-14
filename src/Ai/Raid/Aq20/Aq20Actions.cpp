@@ -68,6 +68,24 @@ bool Aq20KurinnaxxAvoidWideSlashAction::Execute(Event /*event*/)
     return false;
 }
 
+bool Aq20MoamDrainManaAction::Execute(Event /*event*/)
+{
+    uint8 botClass = bot->getClass();
+    if (botClass == CLASS_HUNTER || botClass == CLASS_WARLOCK || botClass == CLASS_PRIEST)
+    {
+        Unit* boss = AI_VALUE2(Unit*, "find target", "moam");
+        if (boss && boss->IsAlive())
+        {
+            if (botClass == CLASS_HUNTER)
+                return botAI->CastSpell(static_cast<uint32>(Aq20Spells::SPELL_HUNTER_VIPER_STING), boss);
+
+            // TODO Warlock -> Drain Mana
+            // TODO Priest -> Mana Burn
+        }
+    }
+    return false;
+}
+
 bool Aq20AyamissMarkLarvaAsSkullAction::Execute(Event /*event*/)
 {
     Unit* larva = FindHiveZaraLarva(botAI);

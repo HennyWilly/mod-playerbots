@@ -13,6 +13,10 @@ namespace Aq20Helpers
 {
     enum class Aq20Spells : uint32
     {
+        // Moam
+        SPELL_HUNTER_VIPER_STING = 3034,
+        SPELL_ENERGIZE = 25685,
+
         // Ossirian the Unscarred
         SPELL_STRENGTH_OF_OSSIRIAN = 25176,
         SPELL_FIRE_WEAKNESS = 25177,
