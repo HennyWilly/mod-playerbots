@@ -5,6 +5,8 @@
  */
 
 #include "Aq20Helpers.h"
+
+#include "Playerbots.h"
 #include "SpellAuras.h"
 
 namespace Aq20Helpers
@@ -22,6 +24,21 @@ namespace Aq20Helpers
         return bot ?
             bot->FindNearestGameObject(static_cast<uint32>(Aq20GameObjects::GO_SAND_TRAP), KURINNAXX_SAND_TRAP_DISTANCE) :
             nullptr;
+    }
+
+    Unit* FindHiveZaraLarva(PlayerbotAI* botAI)
+    {
+        AiObjectContext* context = botAI->GetAiObjectContext();
+
+        // Detect incoming larvae (not on aggro table)
+        GuidVector targets = AI_VALUE(GuidVector, "possible targets no los");
+        for (auto& target : targets)
+        {
+            Unit* unit = botAI->GetUnit(target);
+            if (unit && unit->GetEntry() == static_cast<uint32>(Aq20NPCs::NPC_HIVE_ZARA_LARVA))
+                return unit;
+        }
+        return nullptr;
     }
 
     bool IsOssirianBuffActive(Unit const* ossirian)

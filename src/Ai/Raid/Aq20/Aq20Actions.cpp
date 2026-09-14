@@ -7,9 +7,11 @@
 #include "Aq20Actions.h"
 
 #include "Aq20Helpers.h"
+#include "EncounterHelpers.h"
 #include "Playerbots.h"
 
 using namespace Aq20Helpers;
+using namespace EncounterHelpers;
 
 bool Aq20KurinnaxxAvoidSandTrapAction::Execute(Event /*event*/)
 {
@@ -64,6 +66,12 @@ bool Aq20KurinnaxxAvoidWideSlashAction::Execute(Event /*event*/)
     }
 
     return false;
+}
+
+bool Aq20AyamissMarkLarvaAsSkullAction::Execute(Event /*event*/)
+{
+    Unit* larva = FindHiveZaraLarva(botAI);
+    return larva && MarkTargetWithSkull(bot, larva);
 }
 
 bool Aq20UseCrystalAction::Execute(Event /*event*/)

@@ -7,7 +7,7 @@
 #ifndef PLAYERBOTS_AQ20HELPERS_H
 #define PLAYERBOTS_AQ20HELPERS_H
 
-#include "GameObject.h"
+#include "PlayerbotAI.h"
 
 namespace Aq20Helpers
 {
@@ -33,12 +33,14 @@ namespace Aq20Helpers
 
     enum class Aq20NPCs : uint32
     {
-        // TODO
+        // Ayamiss the Hunter
+        NPC_HIVE_ZARA_LARVA = 15555
     };
 
     constexpr float KURINNAXX_SAND_TRAP_DISTANCE = 10.0f;
 
     GameObject* GetNearestSandTrap(Unit const* bot);
+    Unit* FindHiveZaraLarva(PlayerbotAI* botAI);
     bool IsOssirianBuffActive(Unit const* ossirian);
     int32 GetOssirianDebuffTimeRemaining(Unit const* ossirian);
     GameObject* GetNearestCrystal(Unit const* ossirian);
