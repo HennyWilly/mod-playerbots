@@ -24,6 +24,13 @@ public:
     bool Execute(Event event) override;
 };
 
+class Aq20AyamissMarkLarvaAsSkullAction : public Action
+{
+public:
+    Aq20AyamissMarkLarvaAsSkullAction(PlayerbotAI* botAI) : Action(botAI, "aq20 ayamiss mark larva as skull") {}
+    bool Execute(Event event) override;
+};
+
 class Aq20UseCrystalAction : public MovementAction
 {
 public:

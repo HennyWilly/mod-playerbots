@@ -26,6 +26,17 @@ bool Aq20KurinnaxxPositioningTrigger::IsActive()
     return false;
 }
 
+bool Aq20AyamissLarvaFoundTrigger::IsActive()
+{
+    if (!PlayerbotAI::IsAssistTankOfIndex(bot, 0))
+        return false;
+
+    if (!AI_VALUE2(Unit*, "find target", "ayamiss the hunter"))
+        return false;
+
+    return FindHiveZaraLarva(botAI) != nullptr;
+}
+
 bool Aq20MoveToCrystalTrigger::IsActive()
 {
     if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))

@@ -24,6 +24,13 @@ public:
     bool IsActive() override;
 };
 
+class Aq20AyamissLarvaFoundTrigger : public Trigger
+{
+public:
+    Aq20AyamissLarvaFoundTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 ayamiss larva found") {}
+    bool IsActive() override;
+};
+
 class Aq20MoveToCrystalTrigger : public Trigger
 {
 public:
