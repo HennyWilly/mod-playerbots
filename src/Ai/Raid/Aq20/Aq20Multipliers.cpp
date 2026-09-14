@@ -6,6 +6,7 @@
 
 #include "Aq20Multipliers.h"
 
+#include "HunterActions.h"
 #include "MovementActions.h"
 #include "Playerbots.h"
 
@@ -21,5 +22,20 @@ float KurinnaxxTankMultiplier::GetValue(Action* action)
     // Tanks not targeted by the boss don't run into the Cleave.
     if (boss->GetVictim() != bot && dynamic_cast<TankFaceAction*>(action))
         return 0.0f;
+    return 1.0f;
+}
+
+float MoamMultiplier::GetValue(Action* action)
+{
+    // Prevent Serpent Sting and Scorpid String from overriding Viper String
+    if (bot->getClass() == CLASS_HUNTER)
+    {
+        Unit* boss = AI_VALUE2(Unit*, "find target", "moam");
+        if (boss && (
+            dynamic_cast<CastSerpentStingAction*>(action) ||
+            dynamic_cast<CastScorpidStingAction*>(action)
+        ) && action->GetTarget() == boss)
+            return 0.0f;
+    }
     return 1.0f;
 }

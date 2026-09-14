@@ -26,6 +26,25 @@ bool Aq20KurinnaxxPositioningTrigger::IsActive()
     return false;
 }
 
+bool Aq20MoamCanDrainManaTrigger::IsActive()
+{
+    uint8 botClass = bot->getClass();
+    if (botClass == CLASS_HUNTER || botClass == CLASS_WARLOCK || botClass == CLASS_PRIEST)
+    {
+        Unit* boss = AI_VALUE2(Unit*, "find target", "moam");
+        if (boss && boss->IsAlive())
+        {
+            if (botClass == CLASS_HUNTER)
+                return !boss->HasAura(static_cast<uint32>(Aq20Spells::SPELL_HUNTER_VIPER_STING), bot->GetGUID()) &&
+                    botAI->CanCastSpell(static_cast<uint32>(Aq20Spells::SPELL_HUNTER_VIPER_STING), boss);
+
+            // TODO Warlock -> Drain Mana
+            // TODO Priest -> Mana Burn
+        }
+    }
+    return false;
+}
+
 bool Aq20AyamissLarvaFoundTrigger::IsActive()
 {
     if (!PlayerbotAI::IsAssistTankOfIndex(bot, 0))
