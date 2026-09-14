@@ -24,6 +24,13 @@ public:
     bool IsActive() override;
 };
 
+class Aq20MoamCanDrainManaTrigger : public Trigger
+{
+public:
+    Aq20MoamCanDrainManaTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 moam can drain mana") {}
+    bool IsActive() override;
+};
+
 class Aq20AyamissLarvaFoundTrigger : public Trigger
 {
 public:

@@ -19,6 +19,8 @@ public:
         creators["aq20 kurinnaxx sand trap nearby"] = &RaidAq20TriggerContext::kurinnaxx_sand_trap_nearby;
         creators["aq20 kurinnaxx positioning"] = &RaidAq20TriggerContext::kurinnaxx_positioning;
 
+        creators["aq20 moam can drain mana"] = &RaidAq20TriggerContext::moam_can_drain_mana;
+
         creators["aq20 ayamiss nature resistance"] = &RaidAq20TriggerContext::ayamiss_nature_resistance;
         creators["aq20 ayamiss larva found"] = &RaidAq20TriggerContext::ayamiss_larva_found;
 
@@ -28,6 +30,7 @@ public:
 private:
     static Trigger* kurinnaxx_sand_trap_nearby(PlayerbotAI* ai) { return new Aq20KurinnaxxSandTrapNearbyTrigger(ai); }
     static Trigger* kurinnaxx_positioning(PlayerbotAI* ai) { return new Aq20KurinnaxxPositioningTrigger(ai); }
+    static Trigger* moam_can_drain_mana(PlayerbotAI* ai) { return new Aq20MoamCanDrainManaTrigger(ai); }
     static Trigger* ayamiss_nature_resistance(PlayerbotAI* ai) { return new BossNatureResistanceTrigger(ai, "ayamiss the hunter"); }
     static Trigger* ayamiss_larva_found(PlayerbotAI* ai) { return new Aq20AyamissLarvaFoundTrigger(ai); }
     static Trigger* move_to_crystal(PlayerbotAI* ai) { return new Aq20MoveToCrystalTrigger(ai); }

@@ -24,6 +24,13 @@ public:
     bool Execute(Event event) override;
 };
 
+class Aq20MoamDrainManaAction : public Action
+{
+public:
+    Aq20MoamDrainManaAction(PlayerbotAI* botAI) : Action(botAI, "aq20 moam drain mana") {}
+    bool Execute(Event event) override;
+};
+
 class Aq20AyamissMarkLarvaAsSkullAction : public Action
 {
 public:
