@@ -7,6 +7,7 @@
 #include "Aq20Strategy.h"
 
 #include "Aq20Multipliers.h"
+#include "Playerbots.h"
 
 void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -30,16 +31,37 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     // TODO P2: Ignore boss and kill adds
 
     // Ayamiss the Hunter
-    // TODO P1+P2: Nature resistance
-    // TODO P1+P2: Melee ignores boss while airborne -> Stay close to alter + kill Hive'Zara Larva!
-    // TODO P1: Ranged DPS focus boss (until 70%)
+    triggers.push_back(new TriggerNode("aq20 ayamiss nature resistance", {
+        NextAction("aq20 ayamiss nature resistance", ACTION_RAID) }));
+    triggers.push_back(new TriggerNode("aq20 ayamiss larva found", {
+        NextAction("aq20 ayamiss mark larva as skull", ACTION_RAID) }));
+    // TODO P1+P2: Maybe stay close to altar to kill the larva?
 
     // Ossirian the Unscarred
     triggers.push_back(new TriggerNode("aq20 move to crystal", {
         NextAction("aq20 use crystal", ACTION_RAID) }));
     // TODO Strategy improvements?
 }
+
 void RaidAq20Strategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
 {
     multipliers.push_back(new KurinnaxxTankMultiplier(botAI));
+}
+
+void RaidAq20Strategy::AppendTargetExclusions(GuidSet& exclusions, TargetValueExclusionType type)
+{
+    if (type != TargetValueExclusionType::Dps && type != TargetValueExclusionType::Tank)
+        return;
+
+    Unit* bot = botAI->GetBot();
+    Player* playerBot = bot ? bot->ToPlayer() : nullptr;
+    if (!playerBot || !PlayerbotAI::IsMelee(playerBot))
+        return;
+
+    AiObjectContext* context = botAI->GetAiObjectContext();
+    Unit* boss = AI_VALUE2(Unit*, "find target", "ayamiss the hunter");
+    if (!boss || boss->GetHealthPct() <= 70)
+        return;
+
+    exclusions.insert(boss->GetGUID());
 }
