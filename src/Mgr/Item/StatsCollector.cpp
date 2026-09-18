@@ -703,6 +703,14 @@ void StatsCollector::HandleApplyAura(SpellEffectInfo const& effectInfo, float mu
             }
             break;
         }
+        case SPELL_AURA_MOD_THREAT:
+        {
+            // BasePoints is a percentage threat modifier per school (negative = less threat, e.g.
+            // "Enchant Cloak - Subtlety"); invert it so a threat reduction yields a positive score.
+            if (!(type_ & CollectorType::MELEE_TANK))
+                stats[STATS_TYPE_THREAT_REDUCTION] += -val * multiplier;
+            break;
+        }
         case SPELL_AURA_MOD_POWER_REGEN:
         {
             int32 powerType = effectInfo.MiscValue;

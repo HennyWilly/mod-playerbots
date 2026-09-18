@@ -851,6 +851,15 @@ void StatsWeightCalculator::ApplyWeightFinetune(Player* player)
                 stats_weights_[STATS_TYPE_ARMOR_PENETRATION] *= 1.2f;
         }
     }
+
+    {
+        // Anyone not actively tanking benefits from generating less threat than the tank; tanks want
+        // the opposite, so they are excluded here (and never accumulate this stat, see StatsCollector).
+        // Kept deliberately low: it should only break ties against otherwise-worthless enchants (e.g.
+        // Dodge Rating on a caster cloak), never outweigh a real stat upgrade like Agility or Spell Power.
+        if (type_ != CollectorType::MELEE_TANK)
+            stats_weights_[STATS_TYPE_THREAT_REDUCTION] += 0.1f;
+    }
 }
 
 float StatsWeightCalculator::ApplyPreferredSpecWeapons(ItemTemplate const* proto, int32 slot)

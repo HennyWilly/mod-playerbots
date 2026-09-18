@@ -5207,8 +5207,11 @@ void PlayerbotFactory::ApplyEnchantAndGemsNew(bool /*destroyOld*/)
                 if (enchant->requiredLevel > bot->GetLevel())
                     continue;
 
+                // Require a strictly positive improvement so that enchants scoring 0 (no relevant
+                // stat for this bot's spec, e.g. Dodge Rating on a caster) are skipped instead of
+                // the loop defaulting to whichever zero-score enchant happens to be iterated last.
                 float score = calculator.CalculateEnchant(enchant_id);
-                if (score >= bestScore)
+                if (score > bestScore)
                 {
                     bestScore = score;
                     bestEnchantId = enchant_id;

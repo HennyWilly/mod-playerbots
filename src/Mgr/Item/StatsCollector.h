@@ -43,9 +43,11 @@ enum StatsType : uint8
     // Stats for weapon dps
     STATS_TYPE_MELEE_DPS,
     STATS_TYPE_RANGED_DPS,
+    // Threat management (positive value = less threat generated)
+    STATS_TYPE_THREAT_REDUCTION,
     // Bonus for unrecognized stats
     STATS_TYPE_BONUS,
-    STATS_TYPE_MAX = 26
+    STATS_TYPE_MAX = 27
 };
 
 enum CollectorType : uint8
