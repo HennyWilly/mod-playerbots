@@ -24,6 +24,13 @@ public:
     bool IsActive() override;
 };
 
+class Aq20KurinnaxxTankMortalWoundTrigger : public Trigger
+{
+public:
+    Aq20KurinnaxxTankMortalWoundTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 kurinnaxx tank mortal wound") {}
+    bool IsActive() override;
+};
+
 class Aq20MoamCanDrainManaTrigger : public Trigger
 {
 public:

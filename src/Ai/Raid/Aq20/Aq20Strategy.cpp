@@ -8,6 +8,7 @@
 
 #include "Aq20Multipliers.h"
 #include "Playerbots.h"
+#include "ThreatHelpers.h"
 
 void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 {
@@ -16,7 +17,8 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         NextAction("aq20 kurinnaxx avoid sand trap", ACTION_RAID + 4) }));
     triggers.push_back(new TriggerNode("aq20 kurinnaxx positioning", {
         NextAction("aq20 kurinnaxx avoid wide slash", ACTION_MOVE + 4) }));
-    // TODO Tank switch on N stacks of Mortal Wound
+    triggers.push_back(new TriggerNode("aq20 kurinnaxx tank mortal wound", {
+        NextAction("aq20 kurinnaxx tank swap", ACTION_RAID + 1) }));
 
     // General Rajaxx
     // TODO Do we need a strategy here?
@@ -38,6 +40,7 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     triggers.push_back(new TriggerNode("aq20 ayamiss larva found", {
         NextAction("aq20 ayamiss mark larva as skull", ACTION_RAID) }));
     // TODO P1+P2: Maybe stay close to altar to kill the larva?
+    // TODO P1+P2: Smarter targeting strategy for larva? Maybe closest.
 
     // Anubisath
     // TODO Reflection
@@ -68,8 +71,7 @@ void RaidAq20Strategy::AppendTargetExclusions(GuidSet& exclusions, TargetValueEx
     if (!playerBot || !PlayerbotAI::IsMelee(playerBot))
         return;
 
-    AiObjectContext* context = botAI->GetAiObjectContext();
-    Unit* boss = AI_VALUE2(Unit*, "find target", "ayamiss the hunter");
+    Unit* boss = FindThreatTarget(playerBot, "ayamiss the hunter");
     if (!boss || boss->GetHealthPct() <= 70)
         return;
 

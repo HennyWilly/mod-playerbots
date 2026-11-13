@@ -13,6 +13,9 @@ namespace Aq20Helpers
 {
     enum class Aq20Spells : uint32
     {
+        // Kurinnaxx
+        SPELL_MORTAL_WOUND = 25646,
+
         // Moam
         SPELL_HUNTER_VIPER_STING = 3034,
         SPELL_ENERGIZE = 25685,
@@ -42,8 +45,10 @@ namespace Aq20Helpers
     };
 
     constexpr float KURINNAXX_SAND_TRAP_DISTANCE = 10.0f;
+    constexpr uint8 KURINNAXX_MORTAL_WOUND_SWAP_STACKS = 5;
 
     GameObject* GetNearestSandTrap(Unit const* bot);
+    bool HasSwapMortalWoundStacks(Unit const* unit);
     Unit* FindHiveZaraLarva(PlayerbotAI* botAI);
     bool IsOssirianBuffActive(Unit const* ossirian);
     int32 GetOssirianDebuffTimeRemaining(Unit const* ossirian);

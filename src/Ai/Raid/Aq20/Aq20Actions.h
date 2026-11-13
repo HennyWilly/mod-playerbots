@@ -7,6 +7,7 @@
 #ifndef PLAYERBOTS_AQ20ACTIONS_H
 #define PLAYERBOTS_AQ20ACTIONS_H
 
+#include "AttackAction.h"
 #include "MovementActions.h"
 #include "PlayerbotAI.h"
 
@@ -21,6 +22,13 @@ class Aq20KurinnaxxAvoidWideSlashAction : public MovementAction
 {
 public:
     Aq20KurinnaxxAvoidWideSlashAction(PlayerbotAI* botAI) : MovementAction(botAI, "aq20 kurinnaxx avoid wide slash") {}
+    bool Execute(Event event) override;
+};
+
+class Aq20KurinnaxxTankSwapAction : public AttackAction
+{
+public:
+    Aq20KurinnaxxTankSwapAction(PlayerbotAI* botAI) : AttackAction(botAI, "aq20 kurinnaxx tank swap") {}
     bool Execute(Event event) override;
 };
 

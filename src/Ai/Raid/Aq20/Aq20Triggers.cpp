@@ -8,12 +8,13 @@
 
 #include "Aq20Helpers.h"
 #include "Playerbots.h"
+#include "ThreatHelpers.h"
 
 using namespace Aq20Helpers;
 
 bool Aq20KurinnaxxSandTrapNearbyTrigger::IsActive()
 {
-    if (!AI_VALUE2(Unit*, "find target", "kurinnaxx"))
+    if (!FindThreatTarget(bot, "kurinnaxx"))
         return false;
     return GetNearestSandTrap(bot);
 }
@@ -21,9 +22,25 @@ bool Aq20KurinnaxxSandTrapNearbyTrigger::IsActive()
 bool Aq20KurinnaxxPositioningTrigger::IsActive()
 {
     // Prevent non-tanks from rotating the boss.
-    if (Unit* boss = AI_VALUE2(Unit*, "find target", "kurinnaxx"))
+    if (Unit* boss = FindThreatTarget(bot, "kurinnaxx"))
         return boss->GetVictim() != bot;
     return false;
+}
+
+bool Aq20KurinnaxxTankMortalWoundTrigger::IsActive()
+{
+    if (!PlayerbotAI::IsTank(bot))
+        return false;
+
+    Unit* boss = FindThreatTarget(bot, "kurinnaxx");
+    if (!boss)
+        return false;
+
+    Unit* victim = boss->GetVictim();
+    if (!victim || victim == bot)
+        return false;
+
+    return HasSwapMortalWoundStacks(victim) && !HasSwapMortalWoundStacks(bot);
 }
 
 bool Aq20MoamCanDrainManaTrigger::IsActive()
@@ -31,7 +48,7 @@ bool Aq20MoamCanDrainManaTrigger::IsActive()
     uint8 botClass = bot->getClass();
     if (botClass == CLASS_HUNTER || botClass == CLASS_WARLOCK || botClass == CLASS_PRIEST)
     {
-        Unit* boss = AI_VALUE2(Unit*, "find target", "moam");
+        Unit* boss = FindThreatTarget(bot, "moam");
         if (boss && boss->IsAlive())
         {
             if (botClass == CLASS_HUNTER)
@@ -50,7 +67,7 @@ bool Aq20AyamissLarvaFoundTrigger::IsActive()
     if (!PlayerbotAI::IsAssistTankOfIndex(bot, 0))
         return false;
 
-    if (!AI_VALUE2(Unit*, "find target", "ayamiss the hunter"))
+    if (!FindThreatTarget(bot, "ayamiss the hunter"))
         return false;
 
     return FindHiveZaraLarva(botAI) != nullptr;
@@ -58,7 +75,7 @@ bool Aq20AyamissLarvaFoundTrigger::IsActive()
 
 bool Aq20MoveToCrystalTrigger::IsActive()
 {
-    if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))
+    if (Unit* boss = FindThreatTarget(bot, "ossirian the unscarred"))
     {
         if (boss->IsInCombat())
         {

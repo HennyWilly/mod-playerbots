@@ -26,6 +26,14 @@ namespace Aq20Helpers
             nullptr;
     }
 
+    bool HasSwapMortalWoundStacks(Unit const* unit)
+    {
+        Aura* aura = unit ?
+            unit->GetAura(static_cast<uint32>(Aq20Spells::SPELL_MORTAL_WOUND)) :
+            nullptr;
+        return aura && aura->GetStackAmount() >= KURINNAXX_MORTAL_WOUND_SWAP_STACKS;
+    }
+
     Unit* FindHiveZaraLarva(PlayerbotAI* botAI)
     {
         AiObjectContext* context = botAI->GetAiObjectContext();

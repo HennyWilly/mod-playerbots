@@ -9,6 +9,7 @@
 #include "Aq20Helpers.h"
 #include "EncounterHelpers.h"
 #include "Playerbots.h"
+#include "ThreatHelpers.h"
 
 using namespace Aq20Helpers;
 using namespace EncounterHelpers;
@@ -29,7 +30,7 @@ bool Aq20KurinnaxxAvoidSandTrapAction::Execute(Event /*event*/)
 // TODO Works but copy of BwlRazorgoreAvoidAoeAction::Execute...
 bool Aq20KurinnaxxAvoidWideSlashAction::Execute(Event /*event*/)
 {
-    Unit* boss = AI_VALUE2(Unit*, "find target", "kurinnaxx");
+    Unit* boss = FindThreatTarget(bot, "kurinnaxx");
     if (!boss)
         return false;
 
@@ -68,12 +69,25 @@ bool Aq20KurinnaxxAvoidWideSlashAction::Execute(Event /*event*/)
     return false;
 }
 
+bool Aq20KurinnaxxTankSwapAction::Execute(Event event)
+{
+    Unit* boss = FindThreatTarget(bot, "kurinnaxx");
+    if (!boss || boss->GetVictim() == bot)
+        return false;
+
+    // "taunt spell" casts on the current target.
+    if (AI_VALUE(Unit*, "current target") != boss)
+        return Attack(boss);
+
+    return botAI->DoSpecificAction("taunt spell", event, true);
+}
+
 bool Aq20MoamDrainManaAction::Execute(Event /*event*/)
 {
     uint8 botClass = bot->getClass();
     if (botClass == CLASS_HUNTER || botClass == CLASS_WARLOCK || botClass == CLASS_PRIEST)
     {
-        Unit* boss = AI_VALUE2(Unit*, "find target", "moam");
+        Unit* boss = FindThreatTarget(bot, "moam");
         if (boss && boss->IsAlive())
         {
             if (botClass == CLASS_HUNTER)
@@ -94,7 +108,7 @@ bool Aq20AyamissMarkLarvaAsSkullAction::Execute(Event /*event*/)
 
 bool Aq20UseCrystalAction::Execute(Event /*event*/)
 {
-    if (Unit* boss = AI_VALUE2(Unit*, "find target", "ossirian the unscarred"))
+    if (Unit* boss = FindThreatTarget(bot, "ossirian the unscarred"))
     {
         if (GameObject* crystal = GetNearestCrystal(boss))
         {
