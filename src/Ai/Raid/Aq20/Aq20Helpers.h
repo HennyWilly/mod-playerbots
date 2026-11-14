@@ -61,6 +61,7 @@ namespace Aq20Helpers
     bool HasSwapMortalWoundStacks(Unit const* unit);
     Unit* FindCloseAndorovAttacker(Player* bot);
     Unit* FindHiveZaraLarva(PlayerbotAI* botAI);
+    bool IsMoamStonePhase(Unit const* moam);
     bool IsOssirianBuffActive(Unit const* ossirian);
     int32 GetOssirianDebuffTimeRemaining(Unit const* ossirian);
     GameObject* GetNearestCrystal(Unit const* ossirian);

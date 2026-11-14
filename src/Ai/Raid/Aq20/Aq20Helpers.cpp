@@ -73,6 +73,11 @@ namespace Aq20Helpers
         return nullptr;
     }
 
+    bool IsMoamStonePhase(Unit const* moam)
+    {
+        return moam && moam->HasAura(static_cast<uint32>(Aq20Spells::SPELL_ENERGIZE));
+    }
+
     bool IsOssirianBuffActive(Unit const* ossirian)
     {
         return ossirian && ossirian->HasAura(static_cast<uint32>(Aq20Spells::SPELL_STRENGTH_OF_OSSIRIAN));

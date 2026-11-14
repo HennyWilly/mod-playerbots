@@ -6,6 +6,7 @@
 
 #include "Aq20Strategy.h"
 
+#include "Aq20Helpers.h"
 #include "Aq20Multipliers.h"
 #include "Playerbots.h"
 #include "ThreatHelpers.h"
@@ -33,7 +34,6 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         NextAction("aq20 moam drain mana", ACTION_RAID) }));
     triggers.push_back(new TriggerNode("aq20 moam ranged in trample range", {
         NextAction("aq20 moam avoid trample", ACTION_RAID + 1) })); // Above drain mana so channels start out of range
-    // TODO P2: Ignore boss and kill adds (AppendTargetExclusions)
 
     // Ayamiss the Hunter
     triggers.push_back(new TriggerNode("aq20 ayamiss nature resistance", {
@@ -69,12 +69,20 @@ void RaidAq20Strategy::AppendTargetExclusions(GuidSet& exclusions, TargetValueEx
 
     Unit* bot = botAI->GetBot();
     Player* playerBot = bot ? bot->ToPlayer() : nullptr;
-    if (!playerBot || !PlayerbotAI::IsMelee(playerBot))
+    if (!playerBot)
         return;
 
-    Unit* boss = FindThreatTarget(playerBot, "ayamiss the hunter");
-    if (!boss || boss->GetHealthPct() <= 70)
+    // Moam takes almost no damage during phase 2; kill the Mana Fiends instead.
+    Unit* moam = FindThreatTarget(playerBot, "moam");
+    if (Aq20Helpers::IsMoamStonePhase(moam))
+        exclusions.insert(moam->GetGUID());
+
+    if (!PlayerbotAI::IsMelee(playerBot))
         return;
 
-    exclusions.insert(boss->GetGUID());
+    Unit* ayamiss = FindThreatTarget(playerBot, "ayamiss the hunter");
+    if (!ayamiss || ayamiss->GetHealthPct() <= 70)
+        return;
+
+    exclusions.insert(ayamiss->GetGUID());
 }

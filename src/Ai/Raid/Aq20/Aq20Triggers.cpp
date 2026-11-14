@@ -54,7 +54,8 @@ bool Aq20MoamCanDrainManaTrigger::IsActive()
     if (botClass == CLASS_HUNTER || botClass == CLASS_WARLOCK || botClass == CLASS_PRIEST)
     {
         Unit* boss = FindThreatTarget(bot, "moam");
-        if (boss && boss->IsAlive() && boss->GetPower(POWER_MANA) > 0)
+        // Skip during the stone phase => killing the Mana Fiends takes priority
+        if (boss && boss->IsAlive() && boss->GetPower(POWER_MANA) > 0 && !IsMoamStonePhase(boss))
         {
             if (botClass == CLASS_HUNTER)
                 return !boss->HasAura(static_cast<uint32>(Aq20Spells::SPELL_HUNTER_VIPER_STING), bot->GetGUID()) &&
