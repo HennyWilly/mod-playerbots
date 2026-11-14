@@ -43,6 +43,11 @@ bool Aq20KurinnaxxTankMortalWoundTrigger::IsActive()
     return HasSwapMortalWoundStacks(victim) && !HasSwapMortalWoundStacks(bot);
 }
 
+bool Aq20RajaxxWaveOnAndorovTrigger::IsActive()
+{
+    return PlayerbotAI::IsTank(bot) && FindCloseAndorovAttacker(bot);
+}
+
 bool Aq20MoamCanDrainManaTrigger::IsActive()
 {
     uint8 botClass = bot->getClass();

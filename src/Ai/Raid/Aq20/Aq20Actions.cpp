@@ -82,6 +82,13 @@ bool Aq20KurinnaxxTankSwapAction::Execute(Event event)
     return botAI->DoSpecificAction("taunt spell", event, true);
 }
 
+bool Aq20RajaxxPullWaveFromAndorovAction::Execute(Event /*event*/)
+{
+    // Wave mobs attack Andorov without engaging the raid, so they never appear among the bots' attackers.
+    // Once the tank is on their threat list, the generic tank and dps logic takes over.
+    return Attack(FindCloseAndorovAttacker(bot));
+}
+
 bool Aq20MoamDrainManaAction::Execute(Event /*event*/)
 {
     uint8 botClass = bot->getClass();

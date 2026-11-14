@@ -21,6 +21,8 @@ public:
         creators["aq20 kurinnaxx avoid wide slash"] = &RaidAq20ActionContext::kurinnaxx_avoid_wide_slash;
         creators["aq20 kurinnaxx tank swap"] = &RaidAq20ActionContext::kurinnaxx_tank_swap;
 
+        creators["aq20 rajaxx pull wave from andorov"] = &RaidAq20ActionContext::rajaxx_pull_wave_from_andorov;
+
         creators["aq20 moam drain mana"] = &RaidAq20ActionContext::moam_drain_mana;
 
         creators["aq20 ayamiss nature resistance"] = &RaidAq20ActionContext::ayamiss_nature_resistance;
@@ -33,6 +35,7 @@ private:
     static Action* kurinnaxx_avoid_sand_trap(PlayerbotAI* botAI) { return new Aq20KurinnaxxAvoidSandTrapAction(botAI); }
     static Action* kurinnaxx_avoid_wide_slash(PlayerbotAI* botAI) { return new Aq20KurinnaxxAvoidWideSlashAction(botAI); }
     static Action* kurinnaxx_tank_swap(PlayerbotAI* botAI) { return new Aq20KurinnaxxTankSwapAction(botAI); }
+    static Action* rajaxx_pull_wave_from_andorov(PlayerbotAI* botAI) { return new Aq20RajaxxPullWaveFromAndorovAction(botAI); }
     static Action* moam_drain_mana(PlayerbotAI* botAI) { return new Aq20MoamDrainManaAction(botAI); }
     static Action* ayamiss_nature_resistance(PlayerbotAI* botAI) { return new BossNatureResistanceAction(botAI, "ayamiss the hunter"); }
     static Action* ayamiss_mark_larva_as_skull(PlayerbotAI* botAI) { return new Aq20AyamissMarkLarvaAsSkullAction(botAI); }

@@ -32,6 +32,13 @@ public:
     bool Execute(Event event) override;
 };
 
+class Aq20RajaxxPullWaveFromAndorovAction : public AttackAction
+{
+public:
+    Aq20RajaxxPullWaveFromAndorovAction(PlayerbotAI* botAI) : AttackAction(botAI, "aq20 rajaxx pull wave from andorov") {}
+    bool Execute(Event event) override;
+};
+
 class Aq20MoamDrainManaAction : public Action
 {
 public:

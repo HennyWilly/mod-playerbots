@@ -31,6 +31,13 @@ public:
     bool IsActive() override;
 };
 
+class Aq20RajaxxWaveOnAndorovTrigger : public Trigger
+{
+public:
+    Aq20RajaxxWaveOnAndorovTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 rajaxx wave on andorov") {}
+    bool IsActive() override;
+};
+
 class Aq20MoamCanDrainManaTrigger : public Trigger
 {
 public:

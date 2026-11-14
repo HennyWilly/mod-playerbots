@@ -21,7 +21,8 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         NextAction("aq20 kurinnaxx tank swap", ACTION_RAID + 1) }));
 
     // General Rajaxx
-    // TODO Do we need a strategy here?
+    triggers.push_back(new TriggerNode("aq20 rajaxx wave on andorov", {
+        NextAction("aq20 rajaxx pull wave from andorov", ACTION_RAID) }));
 
     // Buru the Gorger
     // TODO P1: kite boss to egg -> kill egg while boss is near it (maybe pre-damage it till X%) -> repeat until ~20%

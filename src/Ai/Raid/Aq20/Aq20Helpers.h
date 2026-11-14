@@ -38,6 +38,12 @@ namespace Aq20Helpers
         GO_OSSIRIAN_CRYSTAL = 180619
     };
 
+    // Mirrors ruins_of_ahnqiraj.h, which the module can't include.
+    enum class Aq20InstanceData : uint32
+    {
+        DATA_ANDOROV = 15
+    };
+
     enum class Aq20NPCs : uint32
     {
         // Ayamiss the Hunter
@@ -46,9 +52,12 @@ namespace Aq20Helpers
 
     constexpr float KURINNAXX_SAND_TRAP_DISTANCE = 10.0f;
     constexpr uint8 KURINNAXX_MORTAL_WOUND_SWAP_STACKS = 5;
+    constexpr float RAJAXX_ANDOROV_ASSIST_DISTANCE = 50.0f;
+    constexpr float RAJAXX_ANDOROV_ATTACKER_DISTANCE = 20.0f;
 
     GameObject* GetNearestSandTrap(Unit const* bot);
     bool HasSwapMortalWoundStacks(Unit const* unit);
+    Unit* FindCloseAndorovAttacker(Player* bot);
     Unit* FindHiveZaraLarva(PlayerbotAI* botAI);
     bool IsOssirianBuffActive(Unit const* ossirian);
     int32 GetOssirianDebuffTimeRemaining(Unit const* ossirian);

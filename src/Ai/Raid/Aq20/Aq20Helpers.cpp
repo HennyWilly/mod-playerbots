@@ -6,6 +6,7 @@
 
 #include "Aq20Helpers.h"
 
+#include "InstanceScript.h"
 #include "Playerbots.h"
 #include "SpellAuras.h"
 
@@ -32,6 +33,29 @@ namespace Aq20Helpers
             unit->GetAura(static_cast<uint32>(Aq20Spells::SPELL_MORTAL_WOUND)) :
             nullptr;
         return aura && aura->GetStackAmount() >= KURINNAXX_MORTAL_WOUND_SWAP_STACKS;
+    }
+
+    Unit* FindCloseAndorovAttacker(Player* bot)
+    {
+        InstanceScript* instance = bot->GetInstanceScript();
+        if (!instance)
+            return nullptr;
+
+        ObjectGuid const andorovGuid =
+            instance->GetGuidData(static_cast<uint32>(Aq20InstanceData::DATA_ANDOROV));
+        Creature* andorov = andorovGuid ? bot->GetMap()->GetCreature(andorovGuid) : nullptr;
+        if (!andorov || !andorov->IsAlive() || !bot->IsWithinDistInMap(andorov, RAJAXX_ANDOROV_ASSIST_DISTANCE))
+            return nullptr;
+
+        for (Unit* attacker : andorov->getAttackers())
+        {
+            // Wait for the wave to reach Andorov rather than running out to meet it.
+            if (attacker && attacker->IsAlive() &&
+                attacker->IsWithinDistInMap(andorov, RAJAXX_ANDOROV_ATTACKER_DISTANCE) &&
+                !attacker->GetThreatMgr().IsThreatenedBy(bot))
+                return attacker;
+        }
+        return nullptr;
     }
 
     Unit* FindHiveZaraLarva(PlayerbotAI* botAI)

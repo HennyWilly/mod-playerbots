@@ -20,6 +20,8 @@ public:
         creators["aq20 kurinnaxx positioning"] = &RaidAq20TriggerContext::kurinnaxx_positioning;
         creators["aq20 kurinnaxx tank mortal wound"] = &RaidAq20TriggerContext::kurinnaxx_tank_mortal_wound;
 
+        creators["aq20 rajaxx wave on andorov"] = &RaidAq20TriggerContext::rajaxx_wave_on_andorov;
+
         creators["aq20 moam can drain mana"] = &RaidAq20TriggerContext::moam_can_drain_mana;
 
         creators["aq20 ayamiss nature resistance"] = &RaidAq20TriggerContext::ayamiss_nature_resistance;
@@ -32,6 +34,7 @@ private:
     static Trigger* kurinnaxx_sand_trap_nearby(PlayerbotAI* botAI) { return new Aq20KurinnaxxSandTrapNearbyTrigger(botAI); }
     static Trigger* kurinnaxx_positioning(PlayerbotAI* botAI) { return new Aq20KurinnaxxPositioningTrigger(botAI); }
     static Trigger* kurinnaxx_tank_mortal_wound(PlayerbotAI* botAI) { return new Aq20KurinnaxxTankMortalWoundTrigger(botAI); }
+    static Trigger* rajaxx_wave_on_andorov(PlayerbotAI* botAI) { return new Aq20RajaxxWaveOnAndorovTrigger(botAI); }
     static Trigger* moam_can_drain_mana(PlayerbotAI* botAI) { return new Aq20MoamCanDrainManaTrigger(botAI); }
     static Trigger* ayamiss_nature_resistance(PlayerbotAI* botAI) { return new BossNatureResistanceTrigger(botAI, "ayamiss the hunter"); }
     static Trigger* ayamiss_larva_found(PlayerbotAI* botAI) { return new Aq20AyamissLarvaFoundTrigger(botAI); }
