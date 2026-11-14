@@ -51,17 +51,21 @@ namespace Aq20Helpers
         NPC_HIVE_ZARA_LARVA = 15555
     };
 
+    constexpr uint32 AQ20_MAP_ID = 509;
     constexpr float KURINNAXX_SAND_TRAP_DISTANCE = 10.0f;
     constexpr uint8 KURINNAXX_MORTAL_WOUND_SWAP_STACKS = 5;
     constexpr float RAJAXX_ANDOROV_ASSIST_DISTANCE = 50.0f;
     constexpr float RAJAXX_ANDOROV_ATTACKER_DISTANCE = 20.0f;
     constexpr float MOAM_TRAMPLE_SAFE_DISTANCE = 13.0f; // 10 yards + margin.
+    constexpr float AYAMISS_AIRBORNE_HEIGHT = 5.0f;
+    extern const Position AYAMISS_ALTAR_POSITION;
 
     GameObject* GetNearestSandTrap(Unit const* bot);
     bool HasSwapMortalWoundStacks(Unit const* unit);
     Unit* FindCloseAndorovAttacker(Player* bot);
-    Unit* FindHiveZaraLarva(PlayerbotAI* botAI);
     bool IsMoamStonePhase(Unit const* moam);
+    Unit* FindHiveZaraLarva(PlayerbotAI* botAI);
+    bool IsAyamissAirborne(Unit const* ayamiss, Unit const* bot);
     bool IsOssirianBuffActive(Unit const* ossirian);
     int32 GetOssirianDebuffTimeRemaining(Unit const* ossirian);
     GameObject* GetNearestCrystal(Unit const* ossirian);

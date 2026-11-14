@@ -12,6 +12,9 @@
 
 namespace Aq20Helpers
 {
+    // AltarPos in boss_ayamiss.cpp
+    const Position AYAMISS_ALTAR_POSITION = { -9717.18f, 1517.72f, 27.4677f };
+
     static constexpr Aq20Spells OSSIRIAN_DEBUFFS[] = {
         Aq20Spells::SPELL_FIRE_WEAKNESS,
         Aq20Spells::SPELL_FROST_WEAKNESS,
@@ -58,24 +61,38 @@ namespace Aq20Helpers
         return nullptr;
     }
 
+    bool IsMoamStonePhase(Unit const* moam)
+    {
+        return moam && moam->HasAura(static_cast<uint32>(Aq20Spells::SPELL_ENERGIZE));
+    }
+
     Unit* FindHiveZaraLarva(PlayerbotAI* botAI)
     {
         AiObjectContext* context = botAI->GetAiObjectContext();
 
-        // Detect incoming larvae (not on aggro table)
+        // Detect incoming larvae (not on aggro table); the one closest to the altar feeds first.
+        Unit* closest = nullptr;
+        float closestDistance = 0.0f;
         GuidVector targets = AI_VALUE(GuidVector, "possible targets no los");
         for (auto& target : targets)
         {
             Unit* unit = botAI->GetUnit(target);
-            if (unit && unit->GetEntry() == static_cast<uint32>(Aq20NPCs::NPC_HIVE_ZARA_LARVA))
-                return unit;
+            if (!unit || unit->GetEntry() != static_cast<uint32>(Aq20NPCs::NPC_HIVE_ZARA_LARVA))
+                continue;
+
+            float const distance = unit->GetExactDist2d(AYAMISS_ALTAR_POSITION);
+            if (!closest || distance < closestDistance)
+            {
+                closest = unit;
+                closestDistance = distance;
+            }
         }
-        return nullptr;
+        return closest;
     }
 
-    bool IsMoamStonePhase(Unit const* moam)
+    bool IsAyamissAirborne(Unit const* ayamiss, Unit const* bot)
     {
-        return moam && moam->HasAura(static_cast<uint32>(Aq20Spells::SPELL_ENERGIZE));
+        return ayamiss && bot && ayamiss->GetPositionZ() - bot->GetPositionZ() > AYAMISS_AIRBORNE_HEIGHT;
     }
 
     bool IsOssirianBuffActive(Unit const* ossirian)

@@ -40,8 +40,6 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         NextAction("aq20 ayamiss nature resistance", ACTION_RAID) }));
     triggers.push_back(new TriggerNode("aq20 ayamiss larva found", {
         NextAction("aq20 ayamiss mark larva as skull", ACTION_RAID) }));
-    // TODO P1+P2: Maybe stay close to altar to kill the larva?
-    // TODO P1+P2: Smarter targeting strategy for larva? Maybe closest.
 
     // Anubisath
     // TODO Reflection
@@ -81,8 +79,6 @@ void RaidAq20Strategy::AppendTargetExclusions(GuidSet& exclusions, TargetValueEx
         return;
 
     Unit* ayamiss = FindThreatTarget(playerBot, "ayamiss the hunter");
-    if (!ayamiss || ayamiss->GetHealthPct() <= 70)
-        return;
-
-    exclusions.insert(ayamiss->GetGUID());
+    if (Aq20Helpers::IsAyamissAirborne(ayamiss, playerBot))
+        exclusions.insert(ayamiss->GetGUID());
 }

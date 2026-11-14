@@ -7,6 +7,7 @@
 #include "Aq20Triggers.h"
 
 #include "Aq20Helpers.h"
+#include "EncounterHelpers.h"
 #include "Playerbots.h"
 #include "ThreatHelpers.h"
 
@@ -85,7 +86,7 @@ bool Aq20MoamRangedInTrampleRangeTrigger::IsActive()
 
 bool Aq20AyamissLarvaFoundTrigger::IsActive()
 {
-    if (!PlayerbotAI::IsAssistTankOfIndex(bot, 0))
+    if (!EncounterHelpers::IsMechanicTrackerBot(bot, AQ20_MAP_ID))
         return false;
 
     if (!FindThreatTarget(bot, "ayamiss the hunter"))
