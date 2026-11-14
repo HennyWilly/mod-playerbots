@@ -100,11 +100,23 @@ bool Aq20MoamDrainManaAction::Execute(Event /*event*/)
             if (botClass == CLASS_HUNTER)
                 return botAI->CastSpell(static_cast<uint32>(Aq20Spells::SPELL_HUNTER_VIPER_STING), boss);
 
-            // TODO Warlock -> Drain Mana
-            // TODO Priest -> Mana Burn
+            if (botClass == CLASS_PRIEST)
+                return botAI->CastSpell("mana burn", boss);
+
+            return botAI->CastSpell(static_cast<uint32>(Aq20Spells::SPELL_WARLOCK_DRAIN_MANA), boss);
         }
     }
     return false;
+}
+
+bool Aq20MoamAvoidTrampleAction::Execute(Event /*event*/)
+{
+    Unit* boss = FindThreatTarget(bot, "moam");
+    if (!boss)
+        return false;
+
+    float const distance = MOAM_TRAMPLE_SAFE_DISTANCE - bot->GetDistance(boss);
+    return MoveAway(boss, distance);
 }
 
 bool Aq20AyamissMarkLarvaAsSkullAction::Execute(Event /*event*/)

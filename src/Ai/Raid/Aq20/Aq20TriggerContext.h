@@ -23,6 +23,7 @@ public:
         creators["aq20 rajaxx wave on andorov"] = &RaidAq20TriggerContext::rajaxx_wave_on_andorov;
 
         creators["aq20 moam can drain mana"] = &RaidAq20TriggerContext::moam_can_drain_mana;
+        creators["aq20 moam ranged in trample range"] = &RaidAq20TriggerContext::moam_ranged_in_trample_range;
 
         creators["aq20 ayamiss nature resistance"] = &RaidAq20TriggerContext::ayamiss_nature_resistance;
         creators["aq20 ayamiss larva found"] = &RaidAq20TriggerContext::ayamiss_larva_found;
@@ -36,6 +37,7 @@ private:
     static Trigger* kurinnaxx_tank_mortal_wound(PlayerbotAI* botAI) { return new Aq20KurinnaxxTankMortalWoundTrigger(botAI); }
     static Trigger* rajaxx_wave_on_andorov(PlayerbotAI* botAI) { return new Aq20RajaxxWaveOnAndorovTrigger(botAI); }
     static Trigger* moam_can_drain_mana(PlayerbotAI* botAI) { return new Aq20MoamCanDrainManaTrigger(botAI); }
+    static Trigger* moam_ranged_in_trample_range(PlayerbotAI* botAI) { return new Aq20MoamRangedInTrampleRangeTrigger(botAI); }
     static Trigger* ayamiss_nature_resistance(PlayerbotAI* botAI) { return new BossNatureResistanceTrigger(botAI, "ayamiss the hunter"); }
     static Trigger* ayamiss_larva_found(PlayerbotAI* botAI) { return new Aq20AyamissLarvaFoundTrigger(botAI); }
     static Trigger* move_to_crystal(PlayerbotAI* botAI) { return new Aq20MoveToCrystalTrigger(botAI); }

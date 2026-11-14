@@ -46,6 +46,13 @@ public:
     bool Execute(Event event) override;
 };
 
+class Aq20MoamAvoidTrampleAction : public MovementAction
+{
+public:
+    Aq20MoamAvoidTrampleAction(PlayerbotAI* botAI) : MovementAction(botAI, "aq20 moam avoid trample") {}
+    bool Execute(Event event) override;
+};
+
 class Aq20AyamissMarkLarvaAsSkullAction : public Action
 {
 public:

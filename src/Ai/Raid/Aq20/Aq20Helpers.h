@@ -18,6 +18,7 @@ namespace Aq20Helpers
 
         // Moam
         SPELL_HUNTER_VIPER_STING = 3034,
+        SPELL_WARLOCK_DRAIN_MANA = 5138,
         SPELL_ENERGIZE = 25685,
 
         // Ossirian the Unscarred
@@ -38,7 +39,7 @@ namespace Aq20Helpers
         GO_OSSIRIAN_CRYSTAL = 180619
     };
 
-    // Mirrors ruins_of_ahnqiraj.h, which the module can't include.
+    // See ruins_of_ahnqiraj.h
     enum class Aq20InstanceData : uint32
     {
         DATA_ANDOROV = 15
@@ -54,6 +55,7 @@ namespace Aq20Helpers
     constexpr uint8 KURINNAXX_MORTAL_WOUND_SWAP_STACKS = 5;
     constexpr float RAJAXX_ANDOROV_ASSIST_DISTANCE = 50.0f;
     constexpr float RAJAXX_ANDOROV_ATTACKER_DISTANCE = 20.0f;
+    constexpr float MOAM_TRAMPLE_SAFE_DISTANCE = 13.0f; // 10 yards + margin.
 
     GameObject* GetNearestSandTrap(Unit const* bot);
     bool HasSwapMortalWoundStacks(Unit const* unit);

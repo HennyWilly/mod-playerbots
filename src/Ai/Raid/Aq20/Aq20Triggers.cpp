@@ -54,17 +54,32 @@ bool Aq20MoamCanDrainManaTrigger::IsActive()
     if (botClass == CLASS_HUNTER || botClass == CLASS_WARLOCK || botClass == CLASS_PRIEST)
     {
         Unit* boss = FindThreatTarget(bot, "moam");
-        if (boss && boss->IsAlive())
+        if (boss && boss->IsAlive() && boss->GetPower(POWER_MANA) > 0)
         {
             if (botClass == CLASS_HUNTER)
                 return !boss->HasAura(static_cast<uint32>(Aq20Spells::SPELL_HUNTER_VIPER_STING), bot->GetGUID()) &&
                     botAI->CanCastSpell(static_cast<uint32>(Aq20Spells::SPELL_HUNTER_VIPER_STING), boss);
 
-            // TODO Warlock -> Drain Mana
-            // TODO Priest -> Mana Burn
+            // Healers keep their mana for healing.
+            if (botClass == CLASS_PRIEST)
+                return !PlayerbotAI::IsHeal(bot) && botAI->CanCastSpell("mana burn", boss);
+
+            return !boss->HasAura(static_cast<uint32>(Aq20Spells::SPELL_WARLOCK_DRAIN_MANA), bot->GetGUID()) &&
+                botAI->CanCastSpell(static_cast<uint32>(Aq20Spells::SPELL_WARLOCK_DRAIN_MANA), boss);
         }
     }
     return false;
+}
+
+bool Aq20MoamRangedInTrampleRangeTrigger::IsActive()
+{
+    if (!PlayerbotAI::IsRanged(bot))
+        return false;
+
+    Unit* boss = FindThreatTarget(bot, "moam");
+    return boss && boss->IsAlive() &&
+        boss->GetVictim() != bot && // The current target would only drag the boss along.
+        bot->IsWithinDistInMap(boss, MOAM_TRAMPLE_SAFE_DISTANCE);
 }
 
 bool Aq20AyamissLarvaFoundTrigger::IsActive()

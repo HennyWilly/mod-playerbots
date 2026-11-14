@@ -31,8 +31,8 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
     // Moam
     triggers.push_back(new TriggerNode("aq20 moam can drain mana", {
         NextAction("aq20 moam drain mana", ACTION_RAID) }));
-    // TODO P1: Drain mana with Mana Burn, and Drain Mana
-    // TODO P1: Maybe: ranged stay away because of Trample?
+    triggers.push_back(new TriggerNode("aq20 moam ranged in trample range", {
+        NextAction("aq20 moam avoid trample", ACTION_RAID + 1) })); // Above drain mana so channels start out of range
     // TODO P2: Ignore boss and kill adds (AppendTargetExclusions)
 
     // Ayamiss the Hunter

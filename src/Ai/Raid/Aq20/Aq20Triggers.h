@@ -45,6 +45,13 @@ public:
     bool IsActive() override;
 };
 
+class Aq20MoamRangedInTrampleRangeTrigger : public Trigger
+{
+public:
+    Aq20MoamRangedInTrampleRangeTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 moam ranged in trample range") {}
+    bool IsActive() override;
+};
+
 class Aq20AyamissLarvaFoundTrigger : public Trigger
 {
 public:
