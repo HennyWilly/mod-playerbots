@@ -6,11 +6,13 @@
 
 #include "Aq20Multipliers.h"
 
+#include "Aq20Actions.h"
 #include "Aq20Helpers.h"
 #include "EncounterHelpers.h"
 #include "HunterActions.h"
 #include "MovementActions.h"
 #include "Playerbots.h"
+#include "ReachTargetActions.h"
 #include "ThreatHelpers.h"
 
 float KurinnaxxTankMultiplier::GetValue(Action* action)
@@ -36,6 +38,27 @@ float KurinnaxxTankMultiplier::GetValue(Action* action)
             return 0.0f;
     }
     return 1.0f;
+}
+
+float BuruMultiplier::GetValue(Action* action)
+{
+    bool const isCooldown = EncounterHelpers::IsDpsCooldownAction(bot, action);
+    // Charge, Intercept and Feral Charge are reach spells, not movement actions.
+    bool const isOtherMovement = (dynamic_cast<MovementAction*>(action) &&
+        !dynamic_cast<Aq20BuruKiteToEggAction*>(action)) || dynamic_cast<CastReachTargetSpellAction*>(action);
+    if (!isCooldown && !isOtherMovement)
+        return 1.0f;
+
+    Unit* buru = Aq20Helpers::FindUntransformedBuru(bot); // Buru phase 1
+    if (!buru)
+        return 1.0f;
+
+    // Save cooldowns for the burn after the transformation.
+    if (isCooldown)
+        return 0.0f;
+
+    // The fixated bot waits at the egg it kites Buru to.
+    return buru->GetVictim() == bot ? 0.0f : 1.0f;
 }
 
 float MoamMultiplier::GetValue(Action* action)

@@ -26,8 +26,16 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
         NextAction("aq20 rajaxx pull wave from andorov", ACTION_RAID) }));
 
     // Buru the Gorger
-    // TODO P1: kite boss to egg -> kill egg while boss is near it (maybe pre-damage it till X%) -> repeat until ~20%
-    // TODO P2: burn down the boss; maybe safe CDs for P2 because of Creeping Plague?
+    triggers.push_back(new TriggerNode("aq20 buru fixated", {
+        NextAction("aq20 buru kite to egg", ACTION_EMERGENCY) }));
+    triggers.push_back(new TriggerNode("aq20 buru stale egg mark", {
+        NextAction("aq20 buru clear egg mark", ACTION_RAID) }));
+    triggers.push_back(new TriggerNode("aq20 buru egg to mark", {
+        NextAction("aq20 buru mark egg as skull", ACTION_RAID) }));
+    triggers.push_back(new TriggerNode("aq20 buru pet on wrong egg", {
+        NextAction("aq20 buru recall pet", ACTION_RAID) }));
+    triggers.push_back(new TriggerNode("aq20 buru nature resistance", {
+        NextAction("aq20 buru nature resistance", ACTION_RAID) }));
 
     // Moam
     triggers.push_back(new TriggerNode("aq20 moam can drain mana", {
@@ -57,6 +65,7 @@ void RaidAq20Strategy::InitTriggers(std::vector<TriggerNode*>& triggers)
 void RaidAq20Strategy::InitMultipliers(std::vector<Multiplier*>& multipliers)
 {
     multipliers.push_back(new KurinnaxxTankMultiplier(botAI));
+    multipliers.push_back(new BuruMultiplier(botAI));
     multipliers.push_back(new MoamMultiplier(botAI));
 }
 
@@ -69,6 +78,37 @@ void RaidAq20Strategy::AppendTargetExclusions(GuidSet& exclusions, TargetValueEx
     Player* playerBot = bot ? bot->ToPlayer() : nullptr;
     if (!playerBot)
         return;
+
+    // Eggs that are hit join the attackers; leave all but the one to kill.
+    if (Unit* buru = Aq20Helpers::FindUntransformedBuru(playerBot))
+    {
+        bool hatchlingAlive = false;
+        AiObjectContext* context = botAI->GetAiObjectContext();
+        for (ObjectGuid const& guid : AI_VALUE(GuidVector, "attackers"))
+        {
+            Unit* unit = botAI->GetUnit(guid);
+            if (!unit)
+                continue;
+
+            if (unit->GetEntry() == static_cast<uint32>(Aq20Helpers::Aq20NPCs::NPC_HIVEZARA_HATCHLING))
+                hatchlingAlive = true;
+            else if (unit->GetEntry() == static_cast<uint32>(Aq20Helpers::Aq20NPCs::NPC_BURU_EGG) &&
+                     !Aq20Helpers::IsEggToKill(playerBot, buru, unit))
+                exclusions.insert(guid);
+        }
+
+        // Hatchlings first: pause the pre-damage on the marked egg until Buru is close to it.
+        // Tanks can't hold Buru anyway, so they pick the hatchlings up.
+        if (hatchlingAlive)
+        {
+            Creature* egg = Aq20Helpers::GetMarkedEgg(playerBot);
+            if (egg && buru->GetExactDist2d(egg) > Aq20Helpers::BURU_EGG_KILL_DISTANCE)
+                exclusions.insert(egg->GetGUID());
+
+            if (type == TargetValueExclusionType::TankTarget)
+                exclusions.insert(buru->GetGUID());
+        }
+    }
 
     // Moam takes almost no damage during phase 2; kill the Mana Fiends instead.
     Unit* moam = FindThreatTarget(playerBot, "moam");

@@ -22,6 +22,12 @@ public:
 
         creators["aq20 rajaxx wave on andorov"] = &RaidAq20TriggerContext::rajaxx_wave_on_andorov;
 
+        creators["aq20 buru fixated"] = &RaidAq20TriggerContext::buru_fixated;
+        creators["aq20 buru egg to mark"] = &RaidAq20TriggerContext::buru_egg_to_mark;
+        creators["aq20 buru stale egg mark"] = &RaidAq20TriggerContext::buru_stale_egg_mark;
+        creators["aq20 buru pet on wrong egg"] = &RaidAq20TriggerContext::buru_pet_on_wrong_egg;
+        creators["aq20 buru nature resistance"] = &RaidAq20TriggerContext::buru_nature_resistance;
+
         creators["aq20 moam can drain mana"] = &RaidAq20TriggerContext::moam_can_drain_mana;
         creators["aq20 moam ranged in trample range"] = &RaidAq20TriggerContext::moam_ranged_in_trample_range;
 
@@ -36,6 +42,11 @@ private:
     static Trigger* kurinnaxx_positioning(PlayerbotAI* botAI) { return new Aq20KurinnaxxPositioningTrigger(botAI); }
     static Trigger* kurinnaxx_tank_mortal_wound(PlayerbotAI* botAI) { return new Aq20KurinnaxxTankMortalWoundTrigger(botAI); }
     static Trigger* rajaxx_wave_on_andorov(PlayerbotAI* botAI) { return new Aq20RajaxxWaveOnAndorovTrigger(botAI); }
+    static Trigger* buru_fixated(PlayerbotAI* botAI) { return new Aq20BuruFixatedTrigger(botAI); }
+    static Trigger* buru_egg_to_mark(PlayerbotAI* botAI) { return new Aq20BuruEggToMarkTrigger(botAI); }
+    static Trigger* buru_stale_egg_mark(PlayerbotAI* botAI) { return new Aq20BuruStaleEggMarkTrigger(botAI); }
+    static Trigger* buru_pet_on_wrong_egg(PlayerbotAI* botAI) { return new Aq20BuruPetOnWrongEggTrigger(botAI); }
+    static Trigger* buru_nature_resistance(PlayerbotAI* botAI) { return new Aq20BuruNatureResistanceTrigger(botAI); }
     static Trigger* moam_can_drain_mana(PlayerbotAI* botAI) { return new Aq20MoamCanDrainManaTrigger(botAI); }
     static Trigger* moam_ranged_in_trample_range(PlayerbotAI* botAI) { return new Aq20MoamRangedInTrampleRangeTrigger(botAI); }
     static Trigger* ayamiss_nature_resistance(PlayerbotAI* botAI) { return new BossNatureResistanceTrigger(botAI, "ayamiss the hunter"); }

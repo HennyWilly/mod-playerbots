@@ -39,6 +39,37 @@ public:
     bool Execute(Event event) override;
 };
 
+class Aq20BuruKiteToEggAction : public MovementAction
+{
+public:
+    Aq20BuruKiteToEggAction(PlayerbotAI* botAI) : MovementAction(botAI, "aq20 buru kite to egg") {}
+    bool Execute(Event event) override;
+
+private:
+    bool KiteAroundRoom(Unit* buru);
+};
+
+class Aq20BuruMarkEggAsSkullAction : public Action
+{
+public:
+    Aq20BuruMarkEggAsSkullAction(PlayerbotAI* botAI) : Action(botAI, "aq20 buru mark egg as skull") {}
+    bool Execute(Event event) override;
+};
+
+class Aq20BuruClearEggMarkAction : public Action
+{
+public:
+    Aq20BuruClearEggMarkAction(PlayerbotAI* botAI) : Action(botAI, "aq20 buru clear egg mark") {}
+    bool Execute(Event event) override;
+};
+
+class Aq20BuruRecallPetAction : public Action
+{
+public:
+    Aq20BuruRecallPetAction(PlayerbotAI* botAI) : Action(botAI, "aq20 buru recall pet") {}
+    bool Execute(Event event) override;
+};
+
 class Aq20MoamDrainManaAction : public Action
 {
 public:

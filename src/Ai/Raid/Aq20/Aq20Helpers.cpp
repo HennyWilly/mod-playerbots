@@ -8,12 +8,23 @@
 
 #include "InstanceScript.h"
 #include "Playerbots.h"
+#include "RtiTargetValue.h"
 #include "SpellAuras.h"
+#include "ThreatHelpers.h"
+#include <algorithm>
 
 namespace Aq20Helpers
 {
     // AltarPos in boss_ayamiss.cpp
     const Position AYAMISS_ALTAR_POSITION = { -9717.18f, 1517.72f, 27.4677f };
+    // The egg spawns in order around the room, except the one next to Buru's spawn that forces a detour
+    const std::array<Position, 5> BURU_KITE_ROUTE = { {
+        { -9300.19f, 1266.67f, -63.7427f },
+        { -9270.39f, 1243.90f, -63.7673f },
+        { -9243.43f, 1280.50f, -63.5938f },
+        { -9263.01f, 1295.24f, -63.8081f },
+        { -9300.07f, 1305.08f, -63.6971f },
+    } };
 
     static constexpr Aq20Spells OSSIRIAN_DEBUFFS[] = {
         Aq20Spells::SPELL_FIRE_WEAKNESS,
@@ -59,6 +70,94 @@ namespace Aq20Helpers
                 return attacker;
         }
         return nullptr;
+    }
+
+    bool IsBuruTransformed(Unit const* buru)
+    {
+        return buru && buru->HasAura(static_cast<uint32>(Aq20Spells::SPELL_BURU_TRANSFORM));
+    }
+
+    Unit* FindUntransformedBuru(Player* bot)
+    {
+        Unit* buru = FindThreatTarget(bot, "buru the gorger");
+        return buru && buru->IsAlive() && !IsBuruTransformed(buru) ? buru : nullptr;
+    }
+
+    Creature* FindKiteEgg(Player const* bot, Unit const* buru)
+    {
+        std::list<Creature*> eggs;
+        bot->GetCreatureListWithEntryInGrid(
+            eggs, static_cast<uint32>(Aq20NPCs::NPC_BURU_EGG), BURU_EGG_SEARCH_DISTANCE);
+
+        Creature* best = nullptr;
+        float bestDistance = 0.0f;
+        bool bestAhead = false;
+        for (Creature* egg : eggs)
+        {
+            if (!egg->IsAlive())
+                continue;
+
+            float const distance = bot->GetExactDist2d(egg);
+            bool const ahead = distance < buru->GetExactDist2d(egg); // Don't run past Buru.
+            if (!best || (ahead && !bestAhead) || (ahead == bestAhead && distance < bestDistance))
+            {
+                best = egg;
+                bestDistance = distance;
+                bestAhead = ahead;
+            }
+        }
+        return best;
+    }
+
+    Creature* GetMarkedEgg(Player* bot)
+    {
+        Group* group = bot->GetGroup();
+        ObjectGuid const guid = group ? group->GetTargetIcon(RtiTargetValue::skullIndex) : ObjectGuid::Empty;
+        if (guid.GetEntry() != static_cast<uint32>(Aq20NPCs::NPC_BURU_EGG))
+            return nullptr;
+
+        Creature* egg = bot->GetMap()->GetCreature(guid);
+        return egg && egg->IsAlive() ? egg : nullptr;
+    }
+
+    Creature* FindEggToMark(Player* bot)
+    {
+        Unit* buru = FindUntransformedBuru(bot);
+        if (!buru)
+            return nullptr;
+
+        Creature* marked = GetMarkedEgg(bot);
+        if (marked && buru->GetExactDist2d(marked) <= BURU_EGG_EXPLOSION_RADIUS)
+            return marked;
+
+        Unit* victim = buru->GetVictim();
+        Player* player = victim ? victim->ToPlayer() : nullptr;
+        return player ? FindKiteEgg(player, buru) : nullptr;
+    }
+
+    bool IsEggToKill(Player* bot, Unit const* buru, Unit const* egg)
+    {
+        Group* group = bot->GetGroup();
+        if (!group || group->GetTargetIcon(RtiTargetValue::skullIndex) != egg->GetGUID())
+            return false;
+
+        float const distance = buru->GetExactDist2d(egg);
+        if (distance <= BURU_EGG_KILL_DISTANCE)
+            return true;
+
+        // Leaves room for lingering damage like DoTs, so the egg doesn't die while Buru is away.
+        return egg->GetHealthPct() > std::min(distance * BURU_EGG_HOLD_PCT_PER_YARD, BURU_EGG_MAX_HOLD_PCT);
+    }
+
+    Creature* FindPetOnWrongEgg(Player* bot)
+    {
+        Pet* pet = bot->GetPet();
+        Unit* victim = pet ? pet->GetVictim() : nullptr;
+        if (!victim || victim->GetEntry() != static_cast<uint32>(Aq20NPCs::NPC_BURU_EGG))
+            return nullptr;
+
+        Unit* buru = FindUntransformedBuru(bot);
+        return buru && !IsEggToKill(bot, buru, victim) ? pet : nullptr;
     }
 
     bool IsMoamStonePhase(Unit const* moam)

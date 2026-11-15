@@ -7,6 +7,7 @@
 #ifndef PLAYERBOTS_AQ20TRIGGERS_H
 #define PLAYERBOTS_AQ20TRIGGERS_H
 
+#include "BossAuraTriggers.h"
 #include "PlayerbotAI.h"
 #include "Trigger.h"
 
@@ -35,6 +36,41 @@ class Aq20RajaxxWaveOnAndorovTrigger : public Trigger
 {
 public:
     Aq20RajaxxWaveOnAndorovTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 rajaxx wave on andorov") {}
+    bool IsActive() override;
+};
+
+class Aq20BuruFixatedTrigger : public Trigger
+{
+public:
+    Aq20BuruFixatedTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 buru fixated") {}
+    bool IsActive() override;
+};
+
+class Aq20BuruEggToMarkTrigger : public Trigger
+{
+public:
+    Aq20BuruEggToMarkTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 buru egg to mark") {}
+    bool IsActive() override;
+};
+
+class Aq20BuruStaleEggMarkTrigger : public Trigger
+{
+public:
+    Aq20BuruStaleEggMarkTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 buru stale egg mark") {}
+    bool IsActive() override;
+};
+
+class Aq20BuruPetOnWrongEggTrigger : public Trigger
+{
+public:
+    Aq20BuruPetOnWrongEggTrigger(PlayerbotAI* botAI) : Trigger(botAI, "aq20 buru pet on wrong egg") {}
+    bool IsActive() override;
+};
+
+class Aq20BuruNatureResistanceTrigger : public BossNatureResistanceTrigger
+{
+public:
+    Aq20BuruNatureResistanceTrigger(PlayerbotAI* botAI) : BossNatureResistanceTrigger(botAI, "buru the gorger") {}
     bool IsActive() override;
 };
 

@@ -17,6 +17,14 @@ public:
     float GetValue(Action* action) override;
 };
 
+class BuruMultiplier : public Multiplier
+{
+public:
+    BuruMultiplier(
+        PlayerbotAI* botAI) : Multiplier(botAI, "buru multiplier") {}
+    float GetValue(Action* action) override;
+};
+
 class MoamMultiplier : public Multiplier
 {
 public:

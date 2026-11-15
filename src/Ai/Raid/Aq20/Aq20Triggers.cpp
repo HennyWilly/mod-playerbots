@@ -9,6 +9,7 @@
 #include "Aq20Helpers.h"
 #include "EncounterHelpers.h"
 #include "Playerbots.h"
+#include "RtiTargetValue.h"
 #include "ThreatHelpers.h"
 
 using namespace Aq20Helpers;
@@ -47,6 +48,42 @@ bool Aq20KurinnaxxTankMortalWoundTrigger::IsActive()
 bool Aq20RajaxxWaveOnAndorovTrigger::IsActive()
 {
     return PlayerbotAI::IsTank(bot) && FindCloseAndorovAttacker(bot);
+}
+
+bool Aq20BuruFixatedTrigger::IsActive()
+{
+    Unit* buru = FindUntransformedBuru(bot);
+    return buru && buru->GetVictim() == bot;
+}
+
+bool Aq20BuruEggToMarkTrigger::IsActive()
+{
+    if (!EncounterHelpers::IsMechanicTrackerBot(bot, AQ20_MAP_ID))
+        return false;
+
+    Group* group = bot->GetGroup();
+    Creature* egg = FindEggToMark(bot);
+    return group && egg && group->GetTargetIcon(RtiTargetValue::skullIndex) != egg->GetGUID();
+}
+
+bool Aq20BuruStaleEggMarkTrigger::IsActive()
+{
+    // Eggs respawn with the same GUID, so a leftover mark would send bots to an egg at the pull.
+    Group* group = bot->GetGroup();
+    return !bot->IsInCombat() && group &&
+        group->GetTargetIcon(RtiTargetValue::skullIndex).GetEntry() == static_cast<uint32>(Aq20NPCs::NPC_BURU_EGG) &&
+        EncounterHelpers::IsMechanicTrackerBot(bot, AQ20_MAP_ID);
+}
+
+bool Aq20BuruPetOnWrongEggTrigger::IsActive()
+{
+    return FindPetOnWrongEgg(bot) != nullptr;
+}
+
+bool Aq20BuruNatureResistanceTrigger::IsActive()
+{
+    // Creeping Plague only starts after the transformation.
+    return BossNatureResistanceTrigger::IsActive() && IsBuruTransformed(FindThreatTarget(bot, "buru the gorger"));
 }
 
 bool Aq20MoamCanDrainManaTrigger::IsActive()
